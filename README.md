@@ -20,9 +20,9 @@ amongst other skills.
 
 ## Details
 
-**Name**: Your name should appear here
+**Name**: Nikoo Moghadam (13919145)
 
-**Your userid**: e.g., myname01
+**Your userid**: nikoo99m
 
 Please do not forget to complete this part as too often we have "orphaned" repositories,
 which can require months to sort out.
