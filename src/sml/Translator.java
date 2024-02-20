@@ -82,7 +82,11 @@ public final class Translator {
                 String s = scan(false);
                 return new AddInstruction(label, getDestination(d, machine), getSource(s, machine));
             }
-
+            case SubInstruction.OP_CODE -> {
+                String d = scan(true);
+                String s = scan(false);
+                return new SubInstruction(label, getDestination(d, machine), getSource(s, machine));
+            }
 
             // TODO: add code for all other types of instructions
 
