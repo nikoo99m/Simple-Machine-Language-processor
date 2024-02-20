@@ -77,6 +77,13 @@ public final class Translator {
                 return new MovInstruction(label, getDestination(d, machine), getSource(s, machine));
             }
 
+            case AddInstruction.OP_CODE -> {
+                String d = scan(true);
+                String s = scan(false);
+                return new AddInstruction(label, getDestination(d, machine), getSource(s, machine));
+            }
+
+
             // TODO: add code for all other types of instructions
 
             // TODO: Then, replace the switch by using the Reflection API
