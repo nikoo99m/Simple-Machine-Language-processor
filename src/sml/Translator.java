@@ -92,6 +92,11 @@ public final class Translator {
                 String s = scan(false);
                 return new MulInstruction(label, getDestination(d, machine));}
 
+            case DivInstruction.OP_CODE -> {
+                String d = scan(false);
+                String s = scan(false);
+                return new DivInstruction(label, getDestination(d, machine));}
+
             // TODO: add code for all other types of instructions
 
             // TODO: Then, replace the switch by using the Reflection API
