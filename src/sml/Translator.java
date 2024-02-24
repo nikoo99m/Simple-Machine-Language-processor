@@ -90,17 +90,26 @@ public final class Translator {
             case MulInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new MulInstruction(label, getDestination(d, machine));}
+                return new MulInstruction(label, getDestination(d, machine));
+            }
 
             case DivInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new DivInstruction(label, getDestination(d, machine));}
+                return new DivInstruction(label, getDestination(d, machine));
+            }
 
             case CmpInstruction.OP_CODE -> {
                 String d = scan(true);
                 String s = scan(false);
-                return new CmpInstruction(label, getDestination(d, machine), getSource(s, machine), machine.getFlags());}
+                return new CmpInstruction(label, getDestination(d, machine), getSource(s, machine), machine.getFlags());
+            }
+
+            case JgeInstruction.OP_CODE -> {
+                String d = scan(false);
+                String s = scan(false);
+                return new JgeInstruction(label, opcode, machine.getFlags());
+            }
 
             // TODO: add code for all other types of instructions
 
