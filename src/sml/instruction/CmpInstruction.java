@@ -30,12 +30,16 @@ public class CmpInstruction extends Instruction {
 
     @Override
     public int execute(Machine m) {
-        int register1 = m.getRegisters().get(CX);
-        int register2 = m.getRegisters().get(AX);
 
-        if (register1 == register2)
+        int i = source.getValue();
+        int j = result.getValue();
+
+        if (i == j)
             flag.setZF(true);
-        else flag.setSF(register1 < register2);
+        else
+            flag.setZF(false);
+
+        flag.setSF(j < i);
 
         return getSize();
     }
