@@ -97,6 +97,11 @@ public final class Translator {
                 String s = scan(false);
                 return new DivInstruction(label, getDestination(d, machine));}
 
+            case CmpInstruction.OP_CODE -> {
+                String d = scan(true);
+                String s = scan(false);
+                return new CmpInstruction(label, getDestination(d, machine), getSource(s, machine), machine.getFlags());}
+
             // TODO: add code for all other types of instructions
 
             // TODO: Then, replace the switch by using the Reflection API
