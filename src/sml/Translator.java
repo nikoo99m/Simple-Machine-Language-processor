@@ -115,6 +115,11 @@ public final class Translator {
                 String s = scan(false);
                 return new JneInstruction(label, opcode, machine.getFlags());
             }
+            case JleInstruction.OP_CODE -> {
+                String d = scan(false);
+                String s = scan(false);
+                return new JleInstruction(label, opcode, machine.getFlags());
+            }
             // TODO: add code for all other types of instructions
 
             // TODO: Then, replace the switch by using the Reflection API
