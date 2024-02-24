@@ -9,10 +9,12 @@ import java.util.Objects;
 public class JleInstruction extends Instruction {
     private final Flags FLAG;
     public static final String OP_CODE = "jle";
+    private final String GOTOLABEL;
 
-    public JleInstruction(String label, String opcode, Flags flag) {
+    public JleInstruction(String label, String opcode, Flags flag, String gotolabel) {
         super(label, opcode);
         FLAG = flag;
+        GOTOLABEL = gotolabel;
     }
 
     @Override
@@ -23,13 +25,13 @@ public class JleInstruction extends Instruction {
     @Override
     public int execute(Machine m) {
         if (FLAG.getSF() || FLAG.getZF()){
-            return m.getOffset(label);}
+            return m.getOffset(GOTOLABEL);}
         return getSize();
     }
 
     @Override
     public String toString() {
-        return getOpcode();
+        return getOpcode() + " " + GOTOLABEL;
     }
 
     @Override

@@ -8,11 +8,12 @@ import sml.Machine;
 public class JgeInstruction extends Instruction {
     private final Flags FLAG;
     public static final String OP_CODE = "jge";
+    private final String GOTOLABEL;
 
-
-    public JgeInstruction(String label, String opcode, Flags flag) {
+    public JgeInstruction(String label, String opcode, Flags flag, String goToLabel) {
         super(label, opcode);
         this.FLAG = flag;
+        this.GOTOLABEL = goToLabel;
     }
 
     @Override
@@ -23,14 +24,14 @@ public class JgeInstruction extends Instruction {
     @Override
     public int execute(Machine m) {
         if (!FLAG.getSF() || FLAG.getZF()){
-         return m.getOffset(label);
+         return m.getOffset(GOTOLABEL);
     }
         return getSize();
     }
 
     @Override
     public String toString() {
-        return getOpcode() + " " + getLabelString();
+        return getOpcode() + " " + GOTOLABEL;
     }
 
     @Override

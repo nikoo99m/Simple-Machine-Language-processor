@@ -108,17 +108,17 @@ public final class Translator {
             case JgeInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new JgeInstruction(label, opcode, machine.getFlags());
+                return new JgeInstruction(label, opcode, machine.getFlags(), d);
             }
             case JneInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new JneInstruction(label, opcode, machine.getFlags());
+                return new JneInstruction(label, opcode, machine.getFlags(), d);
             }
             case JleInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new JleInstruction(label, opcode, machine.getFlags());
+                return new JleInstruction(label, opcode, machine.getFlags(), d);
             }
             // TODO: add code for all other types of instructions
 
