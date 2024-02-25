@@ -17,10 +17,16 @@ public class MulInstruction extends Instruction {
     @Override
     public int execute(Machine m) {
         int y = destination.getValue();
-
         Registers registers = m.getRegisters();
-        int x = registers.get(Registers.RegisterNameImpl.AX);
-        registers.set(Registers.RegisterNameImpl.AX, x * y);
+        int ax = registers.get(Registers.RegisterNameImpl.AX);
+
+        long number64bit = (long)y * (long)ax;
+        int lower32bits = (int) number64bit;
+        int upper32bits = (int) (number64bit >> 32);
+
+        registers.set(Registers.RegisterNameImpl.AX, lower32bits);
+        registers.set(Registers.RegisterNameImpl.DX, upper32bits);
+
         return getSize();
     }
 
