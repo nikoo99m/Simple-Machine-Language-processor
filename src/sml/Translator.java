@@ -56,6 +56,7 @@ public final class Translator {
         }
     }
 
+
     /**
      * Translates the current line into an instruction with the given label
      *
@@ -102,23 +103,23 @@ public final class Translator {
             case CmpInstruction.OP_CODE -> {
                 String d = scan(true);
                 String s = scan(false);
-                return new CmpInstruction(label, getDestination(d, machine), getSource(s, machine), machine.getFlags());
+                return new CmpInstruction(label, getDestination(d, machine), getSource(s, machine));
             }
 
             case JgeInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new JgeInstruction(label, opcode, machine.getFlags(), d);
+                return new JgeInstruction(label, d);
             }
             case JneInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new JneInstruction(label, opcode, machine.getFlags(), d);
+                return new JneInstruction(label, d);
             }
             case JleInstruction.OP_CODE -> {
                 String d = scan(false);
                 String s = scan(false);
-                return new JleInstruction(label, opcode, machine.getFlags(), d);
+                return new JleInstruction(label, d);
             }
             // TODO: add code for all other types of instructions
 

@@ -6,24 +6,23 @@ import sml.Labels;
 import sml.Machine;
 
 public class JgeInstruction extends Instruction {
-    private final Flags FLAG;
     public static final String OP_CODE = "jge";
     private final String GOTOLABEL;
 
-    public JgeInstruction(String label, String opcode, Flags flag, String goToLabel) {
-        super(label, opcode);
-        this.FLAG = flag;
+    public JgeInstruction(String label, String goToLabel) {
+        super(label, OP_CODE);
         this.GOTOLABEL = goToLabel;
     }
 
     @Override
     public int getSize() {
-        return 2;
+        return 1;
     }
 
     @Override
     public int execute(Machine m) {
-        if (!FLAG.getSF() || FLAG.getZF()){
+        Flags flag = m.getFlags();
+        if (!flag.getSF() || flag.getZF()){
          return m.getOffset(GOTOLABEL);
     }
         return getSize();

@@ -10,14 +10,12 @@ import static sml.Registers.RegisterNameImpl.CX;
 public class CmpInstruction extends Instruction {
     private final InstructionDestination result;
     private final InstructionSource source;
-    private Flags flag;
     public static final String OP_CODE = "cmp";
 
-    public CmpInstruction(String label, InstructionDestination result, InstructionSource source, Flags flag) {
+    public CmpInstruction(String label, InstructionDestination result, InstructionSource source) {
         super(label, OP_CODE);
         this.result = result;
         this.source = source;
-        this.flag = flag;
     }
 
 
@@ -30,7 +28,7 @@ public class CmpInstruction extends Instruction {
 
     @Override
     public int execute(Machine m) {
-
+        Flags flag = m.getFlags();
         int i = source.getValue();
         int j = result.getValue();
 
@@ -46,19 +44,19 @@ public class CmpInstruction extends Instruction {
 
     @Override
     public String toString() {
-            return getLabelString() + getOpcode() + " " + result + ", " + source;
+        return getLabelString() + getOpcode() + " " + result + ", " + source;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CmpInstruction that)) return false;
-        return Objects.equals(result, that.result) && Objects.equals(source, that.source) && Objects.equals(flag, that.flag);
+        return Objects.equals(result, that.result) && Objects.equals(source, that.source);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(result, source, flag);
+        return Objects.hash(result, source);
     }
 }
 

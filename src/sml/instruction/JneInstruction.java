@@ -5,24 +5,23 @@ import sml.Instruction;
 import sml.Machine;
 
 public class JneInstruction extends Instruction {
-    private final Flags FLAG;
     public static final String OP_CODE = "jne";
     private final String GOTOLABEL;
 
-    public JneInstruction(String label, String opcode, Flags flag, String gotolabel) {
-        super(label, opcode);
-        FLAG = flag;
+    public JneInstruction(String label, String gotolabel) {
+        super(label, OP_CODE);
         GOTOLABEL = gotolabel;
     }
 
     @Override
     public int getSize() {
-        return 2;
+        return 1;
     }
 
     @Override
     public int execute(Machine m) {
-        if (!FLAG.getZF())
+        Flags flag = m.getFlags();
+        if (!flag.getZF())
             return m.getOffset(GOTOLABEL);
         return getSize();
     }
