@@ -22,12 +22,12 @@ import java.util.Scanner;
 public final class Translator {
 
     private final String fileName; // source file of SML code
-    private final OpcodeProvider opcodeProvider;
+    private final OpcodeProviderInterface opcodeProvider;
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    public Translator(String fileName, OpcodeProvider opcodeProvider ) {
+    public Translator(String fileName, OpcodeProviderInterface opcodeProvider ) {
         this.fileName = fileName;
         this.opcodeProvider = opcodeProvider;
     }
@@ -105,7 +105,7 @@ public final class Translator {
             // TODO: Then, replace the switch by using the Reflection API // DONE
 
             // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
+            //       to work with different sets of opcodes (different CPUs) // DONE
     }
 
     private InstructionSource getSource(String s, Machine machine) {

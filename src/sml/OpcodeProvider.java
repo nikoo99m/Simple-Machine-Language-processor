@@ -5,8 +5,7 @@ import sml.instruction.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpcodeProvider
-{
+public class OpcodeProvider implements OpcodeProviderInterface {
     private final Map<String, Class<? extends Instruction>> instructionMap = new HashMap<>();
 
     public OpcodeProvider() {
@@ -25,6 +24,7 @@ public class OpcodeProvider
         instructionMap.put(JleInstruction.OP_CODE, JleInstruction.class);
     }
 
+    @Override
     public Class<? extends Instruction> getInstructionClass(String opcode)
     {
         return instructionMap.get(opcode);
