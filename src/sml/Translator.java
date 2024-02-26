@@ -22,13 +22,14 @@ import java.util.Scanner;
 public final class Translator {
 
     private final String fileName; // source file of SML code
+    private final OpcodeProvider opcodeProvider;
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    public Translator(String fileName) {
+    public Translator(String fileName, OpcodeProvider opcodeProvider ) {
         this.fileName = fileName;
-        setInstructionMap();
+        this.opcodeProvider = opcodeProvider;
     }
 
     public void readAndTranslate(Machine machine) throws IOException {
@@ -60,19 +61,8 @@ public final class Translator {
         }
     }
 
-    private final Map<String, Class<? extends Instruction>> instructionMap = new HashMap<>();
 
-    public void setInstructionMap() {
-        instructionMap.put(MovInstruction.OP_CODE, MovInstruction.class);
-        instructionMap.put(AddInstruction.OP_CODE, AddInstruction.class);
-        instructionMap.put(SubInstruction.OP_CODE, SubInstruction.class);
-        instructionMap.put(MulInstruction.OP_CODE, MulInstruction.class);
-        instructionMap.put(DivInstruction.OP_CODE, DivInstruction.class);
-        instructionMap.put(CmpInstruction.OP_CODE, CmpInstruction.class);
-        instructionMap.put(JgeInstruction.OP_CODE, JgeInstruction.class);
-        instructionMap.put(JneInstruction.OP_CODE, JneInstruction.class);
-        instructionMap.put(JleInstruction.OP_CODE, JleInstruction.class);
-    }
+
     /**
      * Translates the current line into an instruction with the given label
      *
@@ -88,7 +78,7 @@ public final class Translator {
             return null;
 
         String opcode = scan(false);
-        Class<? extends Instruction> instructionClass = instructionMap.get(opcode);
+        Class<? extends Instruction> instructionClass = opcodeProvider.getInstructionClass(opcode);
         if (instructionClass != null) {
             try {
                 Constructor<? extends Instruction> constructor;
@@ -117,9 +107,6 @@ public final class Translator {
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
     }
-
-
-
 
     private InstructionSource getSource(String s, Machine machine) {
         return Optional.<InstructionSource>empty()

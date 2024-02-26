@@ -1,4 +1,5 @@
 import sml.Machine;
+import sml.OpcodeProvider;
 import sml.Translator;
 
 import java.io.IOException;
@@ -16,7 +17,8 @@ public class RunSml {
         }
 
         try {
-            Translator t = new Translator(args[0]);
+
+            Translator t = new Translator(args[0], new OpcodeProvider());
             Machine m = new Machine(0x40_000);
             t.readAndTranslate(m);
 
