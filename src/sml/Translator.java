@@ -4,7 +4,10 @@ import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -25,6 +28,7 @@ public final class Translator {
 
     public Translator(String fileName) {
         this.fileName = fileName;
+        setInstructionMap();
     }
 
     public void readAndTranslate(Machine machine) throws IOException {
@@ -56,7 +60,19 @@ public final class Translator {
         }
     }
 
+    private final Map<String, Class<? extends Instruction>> instructionMap = new HashMap<>();
 
+    public void setInstructionMap() {
+        instructionMap.put(MovInstruction.OP_CODE, MovInstruction.class);
+        instructionMap.put(AddInstruction.OP_CODE, AddInstruction.class);
+        instructionMap.put(SubInstruction.OP_CODE, SubInstruction.class);
+        instructionMap.put(MulInstruction.OP_CODE, MulInstruction.class);
+        instructionMap.put(DivInstruction.OP_CODE, DivInstruction.class);
+        instructionMap.put(CmpInstruction.OP_CODE, CmpInstruction.class);
+        instructionMap.put(JgeInstruction.OP_CODE, JgeInstruction.class);
+        instructionMap.put(JneInstruction.OP_CODE, JneInstruction.class);
+        instructionMap.put(JleInstruction.OP_CODE, JleInstruction.class);
+    }
     /**
      * Translates the current line into an instruction with the given label
      *
@@ -66,72 +82,44 @@ public final class Translator {
      * The input line should consist of a single SML instruction,
      * with its label already removed.
      */
-    private Instruction getInstruction(String label, Machine machine) {
+
+    public Instruction getInstruction(String label, Machine machine) {
         if (line.isEmpty())
             return null;
 
         String opcode = scan(false);
-        switch (opcode) {
-            case MovInstruction.OP_CODE -> {
-                String d = scan(true);
-                String s = scan(false);
-                return new MovInstruction(label, getDestination(d, machine), getSource(s, machine));
+        Class<? extends Instruction> instructionClass = instructionMap.get(opcode);
+        if (instructionClass != null) {
+            try {
+                Constructor<? extends Instruction> constructor;
+                if (opcode.equals(JgeInstruction.OP_CODE) || opcode.equals(JneInstruction.OP_CODE) || opcode.equals(JleInstruction.OP_CODE)) {
+                    constructor = instructionClass.getDeclaredConstructor(String.class, String.class);
+                    return constructor.newInstance(label, scan(false));
+                } else if (opcode.equals(MulInstruction.OP_CODE) || opcode.equals(DivInstruction.OP_CODE)) {
+                    constructor = instructionClass.getDeclaredConstructor(String.class, InstructionDestination.class);
+                    return constructor.newInstance(label, getDestination(scan(false), machine));
+                } else {
+                    constructor = instructionClass.getDeclaredConstructor(String.class, InstructionDestination.class, InstructionSource.class);
+                    return constructor.newInstance(label, getDestination(scan(true), machine), getSource(scan(false), machine));
+                }
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                     InvocationTargetException e) {
+                e.printStackTrace();
             }
+        } else {
+            System.out.println("Unknown instruction: " + opcode);
+        }
+        return null;
+            // TODO: add code for all other types of instructions // DONE
 
-            case AddInstruction.OP_CODE -> {
-                String d = scan(true);
-                String s = scan(false);
-                return new AddInstruction(label, getDestination(d, machine), getSource(s, machine));
-            }
-            case SubInstruction.OP_CODE -> {
-                String d = scan(true);
-                String s = scan(false);
-                return new SubInstruction(label, getDestination(d, machine), getSource(s, machine));
-            }
-            case MulInstruction.OP_CODE -> {
-                String d = scan(false);
-                String s = scan(false);
-                return new MulInstruction(label, getDestination(d, machine));
-            }
-
-            case DivInstruction.OP_CODE -> {
-                String d = scan(false);
-                String s = scan(false);
-                return new DivInstruction(label, getDestination(d, machine));
-            }
-
-            case CmpInstruction.OP_CODE -> {
-                String d = scan(true);
-                String s = scan(false);
-                return new CmpInstruction(label, getDestination(d, machine), getSource(s, machine));
-            }
-
-            case JgeInstruction.OP_CODE -> {
-                String d = scan(false);
-                String s = scan(false);
-                return new JgeInstruction(label, d);
-            }
-            case JneInstruction.OP_CODE -> {
-                String d = scan(false);
-                String s = scan(false);
-                return new JneInstruction(label, d);
-            }
-            case JleInstruction.OP_CODE -> {
-                String d = scan(false);
-                String s = scan(false);
-                return new JleInstruction(label, d);
-            }
-            // TODO: add code for all other types of instructions
-
-            // TODO: Then, replace the switch by using the Reflection API
+            // TODO: Then, replace the switch by using the Reflection API // DONE
 
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
-
-            default -> System.out.println("Unknown instruction: " + opcode);
-        }
-        return null;
     }
+
+
+
 
     private InstructionSource getSource(String s, Machine machine) {
         return Optional.<InstructionSource>empty()
