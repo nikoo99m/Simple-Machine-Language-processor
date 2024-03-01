@@ -20,12 +20,15 @@ public class MulInstruction extends Instruction {
         Registers registers = m.getRegisters();
         int ax = registers.get(Registers.RegisterNameImpl.AX);
 
-        long number64bit = (long)y * (long)ax;
-        int lower32bits = (int) number64bit;
-        int upper32bits = (int) (number64bit >> 32);
+        long mul = (long) ax * y;
 
-        registers.set(Registers.RegisterNameImpl.AX, lower32bits);
-        registers.set(Registers.RegisterNameImpl.DX, upper32bits);
+        int lower32 = (int) mul;
+        int upper32 = (int) (mul >>> 31);
+
+        lower32 = lower32 & 0x7FFFFFFF;
+
+        registers.set(Registers.RegisterNameImpl.AX, lower32);
+       registers.set(Registers.RegisterNameImpl.DX, upper32);
 
         return getSize();
     }
