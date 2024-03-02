@@ -103,6 +103,6 @@ public final class Machine {
 
     @Override
     public int hashCode() {
-        return Objects.hash(labels, program, registers, programCounter);
+        return Objects.hash(labels, program, registers, flags, memory, programCounter);
     }
 }
