@@ -40,10 +40,10 @@ class SubInstructionTest {
     @Test
     void executeValidTwo() {
         registers.set(AX, 5);
-        registers.set(BX, 6);
-        Instruction instruction = new SubInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
+        machine.getMemory().set(0, 10);
+        Instruction instruction = new SubInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers));
         instruction.execute(machine);
-        Assertions.assertEquals(-5, machine.getMemory().get(8));
+        Assertions.assertEquals(5, machine.getMemory().get(0));
     }
 
     @Test
