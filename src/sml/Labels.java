@@ -55,6 +55,18 @@ public final class Labels {
 
     // TODO: Implement methods .equals and .hashCode (needed in class Machine).
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Labels other) {
+            return (this.labels.equals(other.labels));
+
+        }
+        return false;
+    }
+
     /**
      * Removes the labels
      */
