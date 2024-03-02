@@ -57,4 +57,17 @@ public class OperandMemoryWithBase implements InstructionSource, InstructionDest
     }
 
     //TODO: implement methods .equals and .hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof OperandMemoryWithBase other) {
+            return this.registers.equals(other.registers)
+                    && this.memory.equals(other.memory)
+                    && this.base.name().equals(other.base.name())
+                    && this.offset == other.offset;
+        }
+        return false;
+    }
 }
