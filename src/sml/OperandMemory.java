@@ -2,6 +2,7 @@ package sml;
 
 import sml.instruction.MovInstruction;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -55,5 +56,10 @@ public class OperandMemory implements InstructionSource, InstructionDestination 
                     && this.address == other.address;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, memory);
     }
 }
