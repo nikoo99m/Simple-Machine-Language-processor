@@ -5,6 +5,8 @@ import sml.InstructionDestination;
 import sml.InstructionSource;
 import sml.Machine;
 
+import java.util.Objects;
+
 
 public class AddInstruction extends Instruction {
 
@@ -52,6 +54,6 @@ public class AddInstruction extends Instruction {
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(super.hashCode(), result, source);
     }
 }
