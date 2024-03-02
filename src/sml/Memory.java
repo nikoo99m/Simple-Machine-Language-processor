@@ -1,6 +1,8 @@
 package sml;
 
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -49,5 +51,8 @@ public class Memory {
         }
         return false;
     }
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(contents),usedCells);
+    }
 }
