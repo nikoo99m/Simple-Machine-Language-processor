@@ -62,7 +62,7 @@ public class CmpInstruction extends Instruction {
 
     @Override
     public int hashCode() {
-        return Objects.hash(result, source);
+        return Objects.hash(super.hashCode(), result, source);
     }
 }
 
