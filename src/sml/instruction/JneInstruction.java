@@ -33,6 +33,13 @@ public class JneInstruction extends Instruction {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof JneInstruction other) {
+            return this.GOTOLABEL.equals(other.GOTOLABEL)
+                    && super.equals(other);
+        }
         return false;
     }
 
