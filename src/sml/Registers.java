@@ -12,7 +12,6 @@ import java.util.stream.Stream;
  */
 public final class Registers {
     private final Map<RegisterNameImpl, Integer> registers = new HashMap<>();
-
     public enum RegisterNameImpl implements RegisterName {
         AX, BX, CX, DX, SP, BP;
     }
@@ -67,8 +66,10 @@ public final class Registers {
     // https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Registers) {
-            Registers other = (Registers) o;
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Registers other) {
             return registers.equals(other.registers);
         }
         return false;
