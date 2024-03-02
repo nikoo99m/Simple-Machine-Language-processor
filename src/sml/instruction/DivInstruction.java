@@ -2,6 +2,8 @@ package sml.instruction;
 
 import sml.*;
 
+import java.util.Objects;
+
 public class DivInstruction extends Instruction {
     private final InstructionDestination result;
     public static final String OP_CODE = "div";
@@ -47,6 +49,6 @@ public class DivInstruction extends Instruction {
     }
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(super.hashCode(), result);
     }
 }
