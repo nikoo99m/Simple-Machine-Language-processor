@@ -5,6 +5,8 @@ import sml.InstructionDestination;
 import sml.Machine;
 import sml.Registers;
 
+import java.util.Objects;
+
 public class MulInstruction extends Instruction {
     private final InstructionDestination result;
     public static final String OP_CODE = "mul";
@@ -57,8 +59,6 @@ public class MulInstruction extends Instruction {
 
     @Override
     public int hashCode() {
-        int result = this.result.hashCode();
-        result = 31 * result;
-        return result;
+        return Objects.hash(super.hashCode(), result);
     }
 }
