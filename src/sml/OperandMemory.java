@@ -1,5 +1,7 @@
 package sml;
 
+import sml.instruction.MovInstruction;
+
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -43,4 +45,15 @@ public class OperandMemory implements InstructionSource, InstructionDestination 
     }
 
     //TODO: implement methods .equals and .hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof OperandMemory other) {
+            return this.memory.equals(other.memory)
+                    && this.address == other.address;
+        }
+        return false;
+    }
 }
