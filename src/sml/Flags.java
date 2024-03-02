@@ -4,6 +4,8 @@ package sml;
 
 import sml.instruction.JleInstruction;
 
+import java.util.Objects;
+
 /**
  *
  * @author ...
@@ -39,5 +41,10 @@ public class Flags {
                     && (this.zero == other.zero);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(zero, sign);
     }
 }
