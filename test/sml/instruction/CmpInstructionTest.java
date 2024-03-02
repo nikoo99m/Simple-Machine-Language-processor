@@ -29,7 +29,7 @@ class CmpInstructionTest {
     void compareWithOperandRegistersAndCheckEquality() {
         registers.set(AX, 5);
         registers.set(BX, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         instruction.execute(machine);
         Assertions.assertEquals(true, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -39,7 +39,7 @@ class CmpInstructionTest {
     void compareWithOperandRegisterAndCheckGreaterThan() {
         registers.set(AX, 5);
         registers.set(BX, 9);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -49,7 +49,7 @@ class CmpInstructionTest {
     void compareWithOperandRegisterAndCheckLessThan() {
         registers.set(AX, 9);
         registers.set(BX, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
@@ -59,7 +59,7 @@ class CmpInstructionTest {
     void compareOperandMemoryWithOperandRegisterAndCheckEquality() {
         registers.set(AX, 5);
         machine.getMemory().set(0, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers));
         instruction.execute(machine);
         Assertions.assertEquals(true, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -69,7 +69,7 @@ class CmpInstructionTest {
     void compareOperandMemoryWithOperandRegisterAndCheckGreaterThan() {
         registers.set(AX, 8);
         machine.getMemory().set(0, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
@@ -79,7 +79,7 @@ class CmpInstructionTest {
     void compareOperandMemoryWithOperandRegisterAndCheckLessThan() {
         registers.set(AX, 8);
         machine.getMemory().set(0, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandRegister(AX, registers));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
@@ -89,7 +89,7 @@ class CmpInstructionTest {
     void compareOperandRegisterWithOperandMemoryAndCheckEquality() {
         registers.set(AX, 5);
         machine.getMemory().set(0, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandMemory(0, machine.getMemory()), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandMemory(0, machine.getMemory()));
         instruction.execute(machine);
         Assertions.assertEquals(true, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -99,7 +99,7 @@ class CmpInstructionTest {
     void compareOperandRegisterWithOperandMemoryAndCheckGreaterThan() {
         registers.set(AX, 5);
         machine.getMemory().set(0, 8);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandMemory(0, machine.getMemory()), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandMemory(0, machine.getMemory()));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
@@ -109,7 +109,7 @@ class CmpInstructionTest {
     void compareOperandRegisterWithOperandMemoryAndCheckLessThan() {
         registers.set(AX, 5);
         machine.getMemory().set(0, 8);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandMemory(0, machine.getMemory()), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandMemory(0, machine.getMemory()));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
@@ -118,7 +118,7 @@ class CmpInstructionTest {
     @Test
     void compareOperandRegisterWithIntegerNumbersAndCheckEquality() {
         registers.set(AX, 6);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandImmediate(6), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandImmediate(6));
         instruction.execute(machine);
         Assertions.assertEquals(true, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -127,7 +127,7 @@ class CmpInstructionTest {
     @Test
     void compareOperandRegisterWithIntegerNumbersAndCheckGreaterThan() {
         registers.set(AX, 7);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandImmediate(2), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandImmediate(2));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -135,7 +135,7 @@ class CmpInstructionTest {
     @Test
     void compareOperandRegisterWithIntegerNumbersAndCheckLessThan() {
         registers.set(AX, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandImmediate(100), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(AX, registers), new OperandImmediate(100));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
@@ -145,7 +145,7 @@ class CmpInstructionTest {
     @Test
     void compareMemoryCellWithIntegerNumbersAndCheckEquality() {
         machine.getMemory().set(0, 5);
-        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandImmediate(5), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandImmediate(5));
         instruction.execute(machine);
         Assertions.assertEquals(true, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -154,7 +154,7 @@ class CmpInstructionTest {
     @Test
     void compareMemoryCellWithIntegerNumbersAndCheckGreaterThan() {
         machine.getMemory().set(0, 7);
-        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandImmediate(5), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandImmediate(5));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(false, machine.getFlags().getSF());
@@ -162,7 +162,7 @@ class CmpInstructionTest {
     @Test
     void compareMemoryCellWithIntegerNumbersAndCheckLessThan() {
         machine.getMemory().set(0, 2);
-        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandImmediate(5), machine.getFlags());
+        Instruction instruction = new CmpInstruction(null, new OperandMemory(0, machine.getMemory()), new OperandImmediate(5));
         instruction.execute(machine);
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
