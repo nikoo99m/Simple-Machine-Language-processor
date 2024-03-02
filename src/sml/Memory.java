@@ -2,6 +2,7 @@ package sml;
 
 import java.util.BitSet;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 // TODO: write a JavaDoc for the class
 
@@ -36,4 +37,17 @@ public class Memory {
     }
 
     //TODO: implement methods .equals and .hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Memory other) {
+            return IntStream.range(0, this.contents.length)
+                    .allMatch(i -> this.contents[i] == other.contents[i])
+                    && this.usedCells.equals(other.usedCells);
+        }
+        return false;
+    }
+
 }
