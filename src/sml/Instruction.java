@@ -103,7 +103,7 @@ public abstract class Instruction {
      *
      * @return the hash code of this instruction
      */
-    @Override
-    public abstract int hashCode();
-
+    public int hashCode() {
+        return Objects.hash(label, opcode);
+    }
 }
