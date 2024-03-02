@@ -6,6 +6,8 @@ import sml.InstructionDestination;
 import sml.InstructionSource;
 import sml.Machine;
 
+import java.util.Objects;
+
 public class SubInstruction extends Instruction {
     private final InstructionDestination result;
     private final InstructionSource source;
@@ -50,8 +52,6 @@ public class SubInstruction extends Instruction {
 
     @Override
     public int hashCode() {
-        int result = this.result.hashCode();
-        result = 31 * result + source.hashCode();
-        return result;
+        return Objects.hash(super.hashCode(), result, source);
     }
 }
