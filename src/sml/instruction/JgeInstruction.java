@@ -5,6 +5,8 @@ import sml.Instruction;
 import sml.Labels;
 import sml.Machine;
 
+import java.util.Objects;
+
 public class JgeInstruction extends Instruction {
     public static final String OP_CODE = "jge";
     private final String GOTOLABEL;
@@ -47,6 +49,6 @@ public class JgeInstruction extends Instruction {
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(super.hashCode(), GOTOLABEL);
     }
 }
