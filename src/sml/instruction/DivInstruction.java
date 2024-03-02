@@ -3,22 +3,22 @@ package sml.instruction;
 import sml.*;
 
 public class DivInstruction extends Instruction {
-    private final InstructionDestination destination;
+    private final InstructionDestination result;
     public static final String OP_CODE = "div";
 
-    public DivInstruction(String label, InstructionDestination destination) {
+    public DivInstruction(String label, InstructionDestination result) {
         super(label, OP_CODE);
-        this.destination = destination;
+        this.result = result;
     }
 
     @Override
     public int getSize() {
-        return 1 + destination.getSize();
+        return 1 + result.getSize();
     }
 
     @Override
     public int execute(Machine m) {
-        int y = destination.getValue();
+        int y = result.getValue();
         Registers registers = m.getRegisters();
         int lower = registers.get(Registers.RegisterNameImpl.AX);
         int upper = registers.get(Registers.RegisterNameImpl.DX);
@@ -31,14 +31,20 @@ public class DivInstruction extends Instruction {
 
     @Override
     public String toString() {
-            return getLabelString()  + getOpcode() + " " + destination ;
+            return getLabelString()  + getOpcode() + " " + result;
         }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof DivInstruction other) {
+            return this.result.equals(other.result)
+                    && super.equals(other);
+        }
         return false;
     }
-
     @Override
     public int hashCode() {
         return 0;
