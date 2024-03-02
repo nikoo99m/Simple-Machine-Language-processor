@@ -4,6 +4,8 @@ import sml.Flags;
 import sml.Instruction;
 import sml.Machine;
 
+import java.util.Objects;
+
 public class JneInstruction extends Instruction {
     public static final String OP_CODE = "jne";
     private final String GOTOLABEL;
@@ -45,6 +47,6 @@ public class JneInstruction extends Instruction {
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(super.hashCode(), GOTOLABEL);
     }
 }
