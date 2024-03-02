@@ -38,5 +38,15 @@ public class OperandRegister implements InstructionSource, InstructionDestinatio
     }
 
     // TODO: Implement methods .equals and .hashCode
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof OperandRegister other) {
+            return this.registers.equals(other.registers)
+                    && this.registerName.name().equals(other.registerName.name());
+        }
+        return false;
+    }
 }
