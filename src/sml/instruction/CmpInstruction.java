@@ -49,9 +49,15 @@ public class CmpInstruction extends Instruction {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CmpInstruction that)) return false;
-        return Objects.equals(result, that.result) && Objects.equals(source, that.source);
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof CmpInstruction other) {
+            return this.source.equals(other.source)
+                    && this.result.equals(other.result)
+                    && super.equals(other);
+        }
+        return false;
     }
 
     @Override
