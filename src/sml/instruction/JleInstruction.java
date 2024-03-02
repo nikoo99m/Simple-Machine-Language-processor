@@ -35,7 +35,14 @@ public class JleInstruction extends Instruction {
 
     @Override
     public boolean equals(Object o) {
-        return true;
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof JleInstruction other) {
+            return this.GOTOLABEL.equals(other.GOTOLABEL)
+                    && super.equals(other);
+        }
+        return false;
     }
 
     @Override
