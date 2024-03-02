@@ -1,5 +1,6 @@
 package sml;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class OperandRegister implements InstructionSource, InstructionDestination {
@@ -48,5 +49,9 @@ public class OperandRegister implements InstructionSource, InstructionDestinatio
                     && this.registerName.name().equals(other.registerName.name());
         }
         return false;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(registers, registerName);
     }
 }
