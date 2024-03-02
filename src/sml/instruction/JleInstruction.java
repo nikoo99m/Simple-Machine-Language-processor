@@ -46,5 +46,7 @@ public class JleInstruction extends Instruction {
     }
 
     @Override
-    public int hashCode(){return 0;}
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), GOTOLABEL);
+    }
 }
