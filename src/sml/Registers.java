@@ -77,7 +77,7 @@ public final class Registers {
 
     @Override
     public int hashCode() {
-        return registers.hashCode();
+        return Objects.hash(registers);
     }
 
     @Override
