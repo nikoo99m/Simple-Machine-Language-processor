@@ -2,6 +2,8 @@ package sml;
 
 // TODO: write a JavaDoc for the class
 
+import sml.instruction.DivInstruction;
+
 import java.util.Objects;
 
 /**
@@ -86,7 +88,14 @@ public abstract class Instruction {
      * @return true if the objects are equal, false otherwise
      */
     @Override
-    public abstract boolean equals(Object o);
+    public boolean equals(Object o)
+    {
+        if (o instanceof Instruction other) {
+            return this.label.equals(other.label)
+                    && this.opcode.equals(other.opcode);
+        }
+        return false;
+    }
 
     /**
      * Returns the hash code of this instruction.
