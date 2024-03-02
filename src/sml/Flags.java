@@ -2,6 +2,8 @@ package sml;
 
 // TODO: write a JavaDoc for the class and methods
 
+import sml.instruction.JleInstruction;
+
 /**
  *
  * @author ...
@@ -27,4 +29,15 @@ public class Flags {
     }
 
     //TODO: implement methods .toString, .equals and .hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Flags other) {
+            return (this.sign == other.sign)
+                    && (this.zero == other.zero);
+        }
+        return false;
+    }
 }
