@@ -35,4 +35,14 @@ public class OperandImmediate implements InstructionSource {
     }
 
     //TODO: implement methods .equals and .hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof OperandImmediate other) {
+            return this.value == other.value;
+        }
+        return false;
+    }
 }
