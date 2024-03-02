@@ -67,6 +67,11 @@ public final class Labels {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(labels);
+    }
+
     /**
      * Removes the labels
      */
