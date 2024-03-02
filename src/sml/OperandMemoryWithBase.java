@@ -1,5 +1,6 @@
 package sml;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,5 +70,9 @@ public class OperandMemoryWithBase implements InstructionSource, InstructionDest
                     && this.offset == other.offset;
         }
         return false;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(offset, base, memory, registers);
     }
 }
