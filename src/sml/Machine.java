@@ -88,12 +88,14 @@ public final class Machine {
     // https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Machine) {
-            // TODO: add missing fields
-            Machine other = (Machine) o;
+        // TODO: add missing fields - DONE
+        if (this == o) return true;
+        if (o instanceof Machine other) {
             return Objects.equals(this.labels, other.labels)
                     && Objects.equals(this.program, other.program)
                     && Objects.equals(this.registers, other.registers)
+                    && Objects.equals(this.flags, other.flags)
+                    && Objects.equals(this.memory, other.memory)
                     && this.programCounter == other.programCounter;
         }
         return false;
