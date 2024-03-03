@@ -2,20 +2,13 @@ package sml.instruction;
 
 import sml.*;
 
-import java.util.Objects;
+public class DivInstruction extends SingleOperandInstruction {
 
-public class DivInstruction extends Instruction {
-    private final InstructionDestination result;
     public static final String OP_CODE = "div";
 
     public DivInstruction(String label, InstructionDestination result) {
-        super(label, OP_CODE);
-        this.result = result;
-    }
+        super(label, OP_CODE, result);
 
-    @Override
-    public int getSize() {
-        return 1 + result.getSize();
     }
 
     @Override
@@ -32,23 +25,7 @@ public class DivInstruction extends Instruction {
     }
 
     @Override
-    public String toString() {
-            return getLabelString()  + getOpcode() + " " + result;
-        }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+            return super.equals(o) && o instanceof DivInstruction;
         }
-        if (o instanceof DivInstruction other) {
-            return this.result.equals(other.result)
-                    && super.equals(other);
-        }
-        return false;
     }
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), result);
-    }
-}

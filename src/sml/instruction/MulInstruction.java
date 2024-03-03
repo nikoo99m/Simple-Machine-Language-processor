@@ -1,19 +1,14 @@
 package sml.instruction;
 
-import sml.Instruction;
 import sml.InstructionDestination;
 import sml.Machine;
 import sml.Registers;
 
-import java.util.Objects;
-
-public class MulInstruction extends Instruction {
-    private final InstructionDestination result;
+public class MulInstruction extends SingleOperandInstruction {
     public static final String OP_CODE = "mul";
 
     public MulInstruction(String label, InstructionDestination result) {
-        super(label, OP_CODE);
-        this.result = result;
+        super(label, OP_CODE, result);
     }
 
     @Override
@@ -34,31 +29,9 @@ public class MulInstruction extends Instruction {
 
         return getSize();
     }
-
-    @Override
-    public int getSize() {
-        return 1 + result.getSize();
-    }
-
-    @Override
-    public String toString() {
-        return getLabelString()  + getOpcode() + " " + result;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof MulInstruction other) {
-            return this.result.equals(other.result)
-                    && super.equals(other);
-        }
-        return false;
+        return super.equals(o) && o instanceof MulInstruction;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), result);
-    }
 }
