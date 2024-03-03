@@ -1,14 +1,14 @@
 package sml;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class // DONE
 
 /**
+ * Represents a map of labels and their associated addresses.
  *
- * @author ...
+ * @author nikoo99m
  */
 public final class Labels {
     private final Map<String, Integer> labels = new HashMap<>();
@@ -22,7 +22,11 @@ public final class Labels {
     public void addLabel(String label, int address) {
         Objects.requireNonNull(label);
         // TODO: Add a check that ensures that label duplicates are not simply ignored.
-        //       What is the best way of handling duplicate labels?
+        //       What is the best way of handling duplicate labels? // DONE
+        // answer: The best way to handle duplicate attempts its to raise an appropriate exception such that the user is informed of the improper operation.
+        if (labels.containsKey(label)) {
+            throw new IllegalStateException("Attempt to add a duplicate label in labels: " + label);
+        }
         labels.put(label, address);
     }
 
@@ -32,12 +36,27 @@ public final class Labels {
      * @param label the label
      * @return the address the label refers to
      */
-    public int getAddress(String label) {
+    public Integer getAddress(String label) {
         // TODO: A NullPointerException can be thrown in the code line below
         //       even when the label is not null. Why can it happen?
         //       (Write an explanation.)
-        //       What is the best way of dealing with non-existing labels?
+        // answer: If the `get()` method of a `HashMap<X, Integer>` returns `null` because
+        //         no value exists for the given key, casting this `null` to `Integer`
+        //         is still valid however, if any operations are then applied to the null value this
+        //         can result in a `NullPointerException`. For example the caller of Labels.getAddress() i.e.,
+        //         Machine.getOffset() attempts a subtraction which can cause the aforementioned exception:
+        //         return labels.getAddress(label) - programCounter.
+        // TODO: What is the best way of dealing with non-existing labels?
         //       Add code to deal with them.
+        // answer: Using the containsKey check, the existence of the key can be verified prior to accessing it.
+        //
+
+        if (label == null)
+            throw new NullPointerException("Label cannot be null");
+
+        if (!labels.containsKey(label))
+            throw new NoSuchElementException("Label '" + label + "' not found");
+
         return labels.get(label);
     }
 
@@ -49,12 +68,21 @@ public final class Labels {
      */
     @Override
     public String toString() {
-        // TODO: Implement the method using the Stream API (see also class Registers).
-        return "";
+        // TODO: Implement the method using the Stream API (see also class Registers). // DONE
+        return labels.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(e -> e.getKey() + " = " + e.getValue())
+                .collect(Collectors.joining(", ", "[", "]")) ;
     }
 
-    // TODO: Implement methods .equals and .hashCode (needed in class Machine).
+    // TODO: Implement methods .equals and .hashCode (needed in class Machine). // DONE
 
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     *
+     * @param o the reference object with which to compare.
+     * @return true if this object is the same as the o argument; false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -67,6 +95,11 @@ public final class Labels {
         return false;
     }
 
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @return a hash code value for this object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(labels);
