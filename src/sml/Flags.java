@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author nikoo99m
  */
 
-public class Flags {
+public class Flags implements IFlags {
     private boolean zero, sign;
 
     /**
@@ -20,6 +20,7 @@ public class Flags {
      *
      * @return true if the zero flag is set, false otherwise.
      */
+    @Override
     public boolean getZF() {
         return zero;
     }
@@ -38,6 +39,7 @@ public class Flags {
      *
      * @return true if the sign flag is set, false otherwise.
      */
+    @Override
     public boolean getSF() {
         return sign;
     }
