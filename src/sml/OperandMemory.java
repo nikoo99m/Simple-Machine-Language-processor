@@ -45,7 +45,7 @@ public class OperandMemory implements InstructionSource, InstructionDestination 
         return "[" + address + "]";
     }
 
-    //TODO: implement methods .equals and .hashCode
+    //TODO: implement methods .equals and .hashCode // DONE
     @Override
     public boolean equals(Object o) {
         if (this == o) {

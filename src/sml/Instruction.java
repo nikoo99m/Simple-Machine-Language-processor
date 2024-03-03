@@ -1,6 +1,6 @@
 package sml;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class // DONE
 
 import sml.instruction.DivInstruction;
 
@@ -70,7 +70,7 @@ public abstract class Instruction {
 
     // TODO: What exactly is the meaning of abstract in the declaration below?
     //       Note that the method is declared in the superclass.
-    //       (Write a short explanation.)
+    //       (Write a short explanation.) // DONE
     // answer : these abstract methods do not have implementation which means
     // subclasses are responsible for providing their own implementations for the required
     // methods based on their attributes and behaviour.
@@ -78,11 +78,10 @@ public abstract class Instruction {
     @Override
     public abstract String toString();
 
-    // TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
+    // TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine). // DONE
 
     /**
      * Checks if this instruction is equal to another object.
-     * This method must be implemented by subclasses to provide equality comparison.
      *
      * @param o the object to compare
      * @return true if the objects are equal, false otherwise
@@ -98,8 +97,7 @@ public abstract class Instruction {
     }
 
     /**
-     * Returns the hash code of this instruction.
-     * This method must be implemented by subclasses to provide a hash code.
+     * Generates the hash code of this instruction.
      *
      * @return the hash code of this instruction
      */
