@@ -1,21 +1,14 @@
 package sml.instruction;
 
-import sml.Instruction;
 import sml.InstructionDestination;
 import sml.InstructionSource;
 import sml.Machine;
 
-import java.util.Objects;
-
-public class MovInstruction extends Instruction {
-    private final InstructionDestination result;
-    private final InstructionSource source;
+public class MovInstruction extends DualOperandInstruction {
     public static final String OP_CODE = "mov";
 
     public MovInstruction(String label, InstructionDestination result, InstructionSource source) {
-        super(label, OP_CODE);
-        this.result = result;
-        this.source = source;
+        super(label, OP_CODE, result, source);
     }
 
     @Override
@@ -26,30 +19,7 @@ public class MovInstruction extends Instruction {
     }
 
     @Override
-    public int getSize() {
-        return 1 + source.getSize() + result.getSize();
-    }
-
-    @Override
-    public String toString() {
-        return getLabelString() + getOpcode() + " " + result + ", " + source;
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof MovInstruction other) {
-            return this.source.equals(other.source)
-                    && this.result.equals(other.result)
-                    && super.equals(other);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), result, source);
+        return super.equals(o) && o instanceof MovInstruction;
     }
 }

@@ -2,28 +2,12 @@ package sml.instruction;
 
 import sml.*;
 
-import java.util.Objects;
+public class CmpInstruction extends DualOperandInstruction {
 
-import static sml.Registers.RegisterNameImpl.AX;
-import static sml.Registers.RegisterNameImpl.CX;
-
-public class CmpInstruction extends Instruction {
-    private final InstructionDestination result;
-    private final InstructionSource source;
     public static final String OP_CODE = "cmp";
 
     public CmpInstruction(String label, InstructionDestination result, InstructionSource source) {
-        super(label, OP_CODE);
-        this.result = result;
-        this.source = source;
-    }
-
-
-    @Override
-    public int getSize() {
-        {
-            return 1 + source.getSize() + result.getSize();
-        }
+        super(label, OP_CODE, result, source);
     }
 
     @Override
@@ -43,26 +27,8 @@ public class CmpInstruction extends Instruction {
     }
 
     @Override
-    public String toString() {
-        return getLabelString() + getOpcode() + " " + result + ", " + source;
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof CmpInstruction other) {
-            return this.source.equals(other.source)
-                    && this.result.equals(other.result)
-                    && super.equals(other);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), result, source);
+        return super.equals(o) && o instanceof CmpInstruction;
     }
 }
 
