@@ -4,8 +4,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import sml.*;
 
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.RegisterNameImpl.*;
 
 class CmpInstructionTest {
@@ -167,4 +174,61 @@ class CmpInstructionTest {
         Assertions.assertEquals(false, machine.getFlags().getZF());
         Assertions.assertEquals(true, machine.getFlags().getSF());
     }
+    static Stream<Arguments> provideTestDataForNotEquals() {
+        Machine machine = new Machine(10);
+        Registers registers = machine.getRegisters();
+        return Stream.of(
+                Arguments.of(new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandRegister(AX, registers)),
+                        new CmpInstruction("cmp2", new OperandRegister(BX, registers), new OperandRegister(AX, registers))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandRegister(AX, registers), new OperandRegister(AX, registers))),
+                        new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandRegister(AX, registers))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandRegister(AX, registers))),
+                        new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandRegister(BX, registers))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandImmediate(10))),
+                        new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandImmediate(2))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
+                        new CmpInstruction("cmp1",new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
+                        new CmpInstruction("cmp1",new OperandMemoryWithBase(1, machine.getMemory(), AX, registers), new OperandRegister(AX, registers)))
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("provideTestDataForNotEquals")
+    public void testNotEquals(Instruction obj1, Instruction obj2) {
+        assertNotEquals(obj1, obj2);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestDataForNotEquals")
+    public void testHashCodeNotEquals(Instruction obj1, Instruction obj2) {
+        assertNotEquals(obj1.hashCode(), obj2.hashCode());
+    }
+
+    static Stream<Arguments> provideTestDataForEquals() {
+        Machine machine = new Machine(10);
+        Registers registers = machine.getRegisters();
+        return Stream.of(
+                Arguments.of(new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandRegister(AX, registers)),
+                        new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandRegister(AX, registers))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandImmediate(10))),
+                        new CmpInstruction("cmp1", new OperandRegister(BX, registers), new OperandImmediate(10))),
+
+                Arguments.of((new CmpInstruction("cmp1", new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
+                        new CmpInstruction("cmp1",new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers)))
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("provideTestDataForEquals")
+    public void testEquals(Instruction obj1, Instruction obj2) {
+
+        assertEquals(obj1, obj2);
+        assertEquals(obj1.hashCode(), obj2.hashCode());
+    }
+
 }
