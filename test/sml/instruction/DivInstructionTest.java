@@ -4,8 +4,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import sml.*;
 
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.RegisterNameImpl.*;
 
 class DivInstructionTest {
@@ -61,4 +68,50 @@ class DivInstructionTest {
         Assertions.assertEquals(2, machine.getRegisters().get(DX));
     }
 
+    static Stream<Arguments> provideTestDataForNotEquals() {
+        Machine machine = new Machine(10);
+        Registers registers = machine.getRegisters();
+        return Stream.of(
+                Arguments.of(new DivInstruction("div1", new OperandRegister(AX, registers)),
+                        new DivInstruction("div2", new OperandRegister(AX, registers))),
+
+                Arguments.of((new DivInstruction("div1", new OperandRegister(AX, registers))),
+                        new DivInstruction("div1", new OperandRegister(BX, registers))),
+
+                Arguments.of((new DivInstruction("div1", new OperandMemory(0 ,machine.getMemory()))),
+                        new DivInstruction("div1", new OperandMemory(3, machine.getMemory()))));
+
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestDataForNotEquals")
+    public void testNotEquals(Instruction obj1, Instruction obj2) {
+        assertNotEquals(obj1, obj2);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestDataForNotEquals")
+    public void testHashCodeNotEquals(Instruction obj1, Instruction obj2) {
+        assertNotEquals(obj1.hashCode(), obj2.hashCode());
+    }
+
+    static Stream<Arguments> provideTestDataForEquals() {
+        Machine machine = new Machine(10);
+        Registers registers = machine.getRegisters();
+        return Stream.of(
+                Arguments.of(new DivInstruction("div1", new OperandRegister(AX, registers)),
+                        new DivInstruction("div1", new OperandRegister(AX, registers))),
+
+                Arguments.of((new DivInstruction("div1", new OperandMemory(0 ,machine.getMemory()))),
+                        new DivInstruction("div1", new OperandMemory(0, machine.getMemory()))));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestDataForEquals")
+    public void testEquals(Instruction obj1, Instruction obj2) {
+
+        assertEquals(obj1, obj2);
+        assertEquals(obj1.hashCode(), obj2.hashCode());
+    }
 }
