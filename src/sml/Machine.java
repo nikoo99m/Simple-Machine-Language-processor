@@ -7,15 +7,14 @@ import java.util.stream.Collectors;
  * Represents the machine, the context in which programs run.
  * <p>
  * An instance contains
- *    - registers,
- *    - flags,
- *    - memory,
- *    - program counter,
- *    - labels,
- *    - program.
- *
+ * - registers,
+ * - flags,
+ * - memory,
+ * - program counter,
+ * - labels,
+ * - program.
  */
-public final class Machine {
+public final class Machine implements IMachine {
 
     private final Labels labels = new Labels();
 
@@ -41,6 +40,7 @@ public final class Machine {
      * Execute the program in program, beginning at instruction 0.
      * Precondition: the program and its labels have been stored properly.
      */
+    @Override
     public void execute() {
         programCounter = 0;
         registers.clear();
@@ -64,9 +64,13 @@ public final class Machine {
         return this.registers;
     }
 
-    public Flags getFlags() { return this.flags; }
+    public Flags getFlags() {
+        return this.flags;
+    }
 
-    public Memory getMemory() { return this.memory; }
+    public Memory getMemory() {
+        return this.memory;
+    }
 
     public int getOffset(String label) {
         return labels.getAddress(label) - programCounter;
@@ -84,11 +88,11 @@ public final class Machine {
                 .collect(Collectors.joining("\n"));
     }
 
-    // TODO: use pattern matching for instanceof
+    // TODO: use pattern matching for instanceof // DONE
     // https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
     @Override
     public boolean equals(Object o) {
-        // TODO: add missing fields - DONE
+        // TODO: add missing fields // DONE
         if (this == o) return true;
         if (o instanceof Machine other) {
             return Objects.equals(this.labels, other.labels)
