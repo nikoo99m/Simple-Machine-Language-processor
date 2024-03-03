@@ -1,24 +1,15 @@
 package sml.instruction;
 
 import sml.Flags;
-import sml.Instruction;
 import sml.Machine;
 
-import java.util.Objects;
-
-public class JneInstruction extends Instruction {
+public class JneInstruction extends JumpInstruction {
     public static final String OP_CODE = "jne";
-    private final String GOTOLABEL;
 
     public JneInstruction(String label, String gotolabel) {
-        super(label, OP_CODE);
-        GOTOLABEL = gotolabel;
+        super(label, OP_CODE, gotolabel);
     }
 
-    @Override
-    public int getSize() {
-        return 1;
-    }
 
     @Override
     public int execute(Machine m) {
@@ -29,24 +20,7 @@ public class JneInstruction extends Instruction {
     }
 
     @Override
-    public String toString() {
-        return getOpcode() + " " + GOTOLABEL;
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof JneInstruction other) {
-            return this.GOTOLABEL.equals(other.GOTOLABEL)
-                    && super.equals(other);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), GOTOLABEL);
+        return super.equals(o) && o instanceof JneInstruction;
     }
 }

@@ -1,24 +1,13 @@
 package sml.instruction;
 
 import sml.Flags;
-import sml.Instruction;
-import sml.Labels;
 import sml.Machine;
 
-import java.util.Objects;
-
-public class JgeInstruction extends Instruction {
+public class JgeInstruction extends JumpInstruction {
     public static final String OP_CODE = "jge";
-    private final String GOTOLABEL;
 
     public JgeInstruction(String label, String goToLabel) {
-        super(label, OP_CODE);
-        this.GOTOLABEL = goToLabel;
-    }
-
-    @Override
-    public int getSize() {
-        return 1;
+        super(label, OP_CODE, goToLabel);
     }
 
     @Override
@@ -29,26 +18,9 @@ public class JgeInstruction extends Instruction {
     }
         return getSize();
     }
-
-    @Override
-    public String toString() {
-        return getOpcode() + " " + GOTOLABEL;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o instanceof JgeInstruction other) {
-            return this.GOTOLABEL.equals(other.GOTOLABEL)
-                    && super.equals(other);
-        }
-        return false;
+        return super.equals(o) && o instanceof JgeInstruction;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), GOTOLABEL);
-    }
 }
