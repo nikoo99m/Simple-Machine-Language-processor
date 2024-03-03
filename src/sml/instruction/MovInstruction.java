@@ -1,8 +1,8 @@
 package sml.instruction;
 
+import sml.IMachine;
 import sml.InstructionDestination;
 import sml.InstructionSource;
-import sml.Machine;
 
 public class MovInstruction extends DualOperandInstruction {
     public static final String OP_CODE = "mov";
@@ -12,7 +12,7 @@ public class MovInstruction extends DualOperandInstruction {
     }
 
     @Override
-    public int execute(Machine m) {
+    public int execute(IMachine m) {
         int value = source.getValue();
         result.setValue(value);
         return getSize();

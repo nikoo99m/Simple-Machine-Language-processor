@@ -1,9 +1,9 @@
 package sml.instruction;
 
 
+import sml.IMachine;
 import sml.InstructionDestination;
 import sml.InstructionSource;
-import sml.Machine;
 
 public class SubInstruction extends DualOperandInstruction {
     public static final String OP_CODE = "sub";
@@ -13,7 +13,7 @@ public class SubInstruction extends DualOperandInstruction {
     }
 
     @Override
-    public int execute(Machine m) {
+    public int execute(IMachine m) {
         int x = result.getValue();
         int y = source.getValue();
         result.setValue(x - y);

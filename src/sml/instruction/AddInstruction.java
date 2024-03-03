@@ -1,8 +1,8 @@
 package sml.instruction;
 
+import sml.IMachine;
 import sml.InstructionDestination;
 import sml.InstructionSource;
-import sml.Machine;
 
 
 public class AddInstruction extends DualOperandInstruction {
@@ -14,7 +14,7 @@ public class AddInstruction extends DualOperandInstruction {
     }
 
     @Override
-    public int execute(Machine m) {
+    public int execute(IMachine m) {
         int x = source.getValue();
         int y = result.getValue();
         result.setValue(x + y);

@@ -11,8 +11,8 @@ public class CmpInstruction extends DualOperandInstruction {
     }
 
     @Override
-    public int execute(Machine m) {
-        Flags flag = m.getFlags();
+    public int execute(IMachine m) {
+        IFlags flag = m.getFlags();
         int i = source.getValue();
         int j = result.getValue();
 

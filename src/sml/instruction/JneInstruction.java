@@ -1,7 +1,8 @@
 package sml.instruction;
 
 import sml.Flags;
-import sml.Machine;
+import sml.IFlags;
+import sml.IMachine;
 
 public class JneInstruction extends JumpInstruction {
     public static final String OP_CODE = "jne";
@@ -12,8 +13,8 @@ public class JneInstruction extends JumpInstruction {
 
 
     @Override
-    public int execute(Machine m) {
-        Flags flag = m.getFlags();
+    public int execute(IMachine m) {
+        IFlags flag = m.getFlags();
         if (!flag.getZF())
             return m.getOffset(GOTOLABEL);
         return getSize();

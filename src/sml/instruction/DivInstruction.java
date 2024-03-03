@@ -12,7 +12,7 @@ public class DivInstruction extends SingleOperandInstruction {
     }
 
     @Override
-    public int execute(Machine m) {
+    public int execute(IMachine m) {
         int y = result.getValue();
         Registers registers = m.getRegisters();
         int lower = registers.get(Registers.RegisterNameImpl.AX);

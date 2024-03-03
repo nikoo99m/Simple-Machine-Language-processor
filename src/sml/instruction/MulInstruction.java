@@ -1,7 +1,7 @@
 package sml.instruction;
 
+import sml.IMachine;
 import sml.InstructionDestination;
-import sml.Machine;
 import sml.Registers;
 
 public class MulInstruction extends SingleOperandInstruction {
@@ -12,7 +12,7 @@ public class MulInstruction extends SingleOperandInstruction {
     }
 
     @Override
-    public int execute(Machine m) {
+    public int execute(IMachine m) {
         int y = result.getValue();
         Registers registers = m.getRegisters();
         int ax = registers.get(Registers.RegisterNameImpl.AX);

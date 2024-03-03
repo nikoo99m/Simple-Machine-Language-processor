@@ -2,8 +2,6 @@ package sml;
 
 // TODO: write a JavaDoc for the class // DONE
 
-import sml.instruction.DivInstruction;
-
 import java.util.Objects;
 
 /**
@@ -62,7 +60,7 @@ public abstract class Instruction {
      * @return the new program counter
      */
 
-    public abstract int execute(Machine machine);
+    public abstract int execute(IMachine machine);
 
     protected String getLabelString() {
         return (getLabel() == null) ? "" : getLabel() + ": ";
