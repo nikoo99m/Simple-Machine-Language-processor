@@ -59,19 +59,20 @@ public final class Machine implements IMachine {
     public Map<Integer, Instruction> getProgram() {
         return this.program;
     }
-
+    @Override
     public Registers getRegisters() {
         return this.registers;
     }
 
-    public Flags getFlags() {
+    @Override
+    public IFlags getFlags() {
         return this.flags;
     }
 
     public Memory getMemory() {
         return this.memory;
     }
-
+    @Override
     public int getOffset(String label) {
         return labels.getAddress(label) - programCounter;
     }
