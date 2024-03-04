@@ -47,9 +47,10 @@ class AddInstructionTest {
     void executeValidTwo() {
         registers.set(AX, 5);
         registers.set(BX, 6);
+        machine.getMemory().set(8, 10);
         Instruction instruction = new AddInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
         instruction.execute(machine);
-        Assertions.assertEquals(5, machine.getMemory().get(8));
+        Assertions.assertEquals(15, machine.getMemory().get(8));
     }
 
     @Test
@@ -77,12 +78,13 @@ class AddInstructionTest {
                         new AddInstruction("add1", new OperandRegister(BX, registers), new OperandImmediate(2))),
 
                 Arguments.of((new AddInstruction("add1", new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
-                        new AddInstruction("add1",new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
+                        new AddInstruction("add1", new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
 
                 Arguments.of((new AddInstruction("add1", new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
-                        new AddInstruction("add1",new OperandMemoryWithBase(1, machine.getMemory(), AX, registers), new OperandRegister(AX, registers)))
+                        new AddInstruction("add1", new OperandMemoryWithBase(1, machine.getMemory(), AX, registers), new OperandRegister(AX, registers)))
         );
     }
+
     @ParameterizedTest
     @MethodSource("provideTestDataForNotEquals")
     public void testNotEquals(Instruction obj1, Instruction obj2) {
@@ -106,9 +108,10 @@ class AddInstructionTest {
                         new AddInstruction("add1", new OperandRegister(BX, registers), new OperandImmediate(10))),
 
                 Arguments.of((new AddInstruction("add1", new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers))),
-                        new AddInstruction("add1",new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers)))
+                        new AddInstruction("add1", new OperandMemoryWithBase(1, machine.getMemory(), BX, registers), new OperandRegister(AX, registers)))
         );
     }
+
     @ParameterizedTest
     @MethodSource("provideTestDataForEquals")
     public void testEquals(Instruction obj1, Instruction obj2) {
@@ -117,4 +120,33 @@ class AddInstructionTest {
         assertEquals(obj1.hashCode(), obj2.hashCode());
     }
 
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new AddInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
+        String result = instruction.toString();
+
+        assertEquals("add DX, 100", result);
+    }
+
+    @Test
+    public void testToStringtwo() {
+
+        Instruction instruction = new AddInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("add BX, AX", result);
+    }
+    @Test
+    public void testToStringthree() {
+
+        Instruction instruction = new AddInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("add [BX + 2], AX", result);
+    }
 }
+
+
+
+

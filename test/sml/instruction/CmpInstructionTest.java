@@ -231,4 +231,31 @@ class CmpInstructionTest {
         assertEquals(obj1.hashCode(), obj2.hashCode());
     }
 
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new CmpInstruction("f4", new OperandRegister(DX, registers), new OperandImmediate(10));
+        String result = instruction.toString();
+
+        assertEquals("f4: cmp DX, 10", result);
+    }
+
+    @Test
+    public void testToStringtwo() {
+
+        Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("cmp BX, AX", result);
+    }
+    @Test
+    public void testToStringthree() {
+
+        Instruction instruction = new CmpInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("cmp [BX + 2], AX", result);
+    }
+
+
 }

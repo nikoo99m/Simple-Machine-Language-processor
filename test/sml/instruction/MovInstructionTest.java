@@ -117,4 +117,30 @@ class MovInstructionTest {
         assertEquals(obj1.hashCode(), obj2.hashCode());
     }
 
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new MovInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
+        String result = instruction.toString();
+
+        assertEquals("mov DX, 100", result);
+    }
+
+    @Test
+    public void testToStringtwo() {
+
+        Instruction instruction = new MovInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("mov BX, AX", result);
+    }
+    @Test
+    public void testToStringthree() {
+
+        Instruction instruction = new MovInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("mov [BX + 2], AX", result);
+    }
 }
+

@@ -116,5 +116,31 @@ class SubInstructionTest {
         assertEquals(obj1.hashCode(), obj2.hashCode());
     }
 
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new SubInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(1));
+        String result = instruction.toString();
+
+        assertEquals("sub DX, 1", result);
+    }
+
+    @Test
+    public void testToStringtwo() {
+
+        Instruction instruction = new SubInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("sub BX, AX", result);
+    }
+    @Test
+    public void testToStringthree() {
+
+        Instruction instruction = new SubInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
+        String result = instruction.toString();
+
+        assertEquals("sub [BX + 2], AX", result);
+    }
+
 }
 
