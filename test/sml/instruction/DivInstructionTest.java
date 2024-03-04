@@ -114,4 +114,22 @@ class DivInstructionTest {
         assertEquals(obj1, obj2);
         assertEquals(obj1.hashCode(), obj2.hashCode());
     }
+
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new DivInstruction(null, new OperandMemory(7, machine.getMemory()));
+        String result = instruction.toString();
+
+        assertEquals("div [7]", result);
+    }
+
+    @Test
+    public void testToStringtwo() {
+
+        Instruction instruction = new DivInstruction(null, new OperandRegister(BX, registers));
+        String result = instruction.toString();
+
+        assertEquals("div BX", result);
+    }
 }

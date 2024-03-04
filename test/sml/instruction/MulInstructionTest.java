@@ -42,6 +42,15 @@ class MulInstructionTest {
         Assertions.assertEquals(30, machine.getRegisters().get(AX));
         Assertions.assertEquals(0, machine.getRegisters().get(DX));
     }
+    @Test
+    void multiplyWithAxAndOperandRegisterWhenTheResultIsMoreThan32Bits() {
+        registers.set(AX, 2147483647);
+        registers.set(BX, 10);
+        Instruction instruction = new MulInstruction(null, new OperandRegister(BX, registers));
+        instruction.execute(machine);
+        Assertions.assertEquals(2147483638, machine.getRegisters().get(AX));
+        Assertions.assertEquals(9, machine.getRegisters().get(DX));
+    }
 
     @Test
     void multiplyWithAxAndOperandMemoryCell() {
@@ -97,5 +106,23 @@ class MulInstructionTest {
 
         assertEquals(obj1, obj2);
         assertEquals(obj1.hashCode(), obj2.hashCode());
+    }
+
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new MulInstruction("f1", new OperandMemory(7, machine.getMemory()));
+        String result = instruction.toString();
+
+        assertEquals("f1: mul [7]", result);
+    }
+
+    @Test
+    public void testToStringtwo() {
+
+        Instruction instruction = new MulInstruction("f2", new OperandRegister(BX, registers));
+        String result = instruction.toString();
+
+        assertEquals("f2: mul BX", result);
     }
 }
