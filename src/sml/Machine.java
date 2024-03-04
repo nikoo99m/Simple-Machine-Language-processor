@@ -24,7 +24,7 @@ public final class Machine implements IMachine {
 
     private final Memory memory;
 
-    private final Flags flags;
+    private final IFlags flags;
 
     // The program counter; it contains the index (in program)
     // of the next instruction to be executed.
