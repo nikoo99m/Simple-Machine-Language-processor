@@ -22,12 +22,12 @@ import java.util.Scanner;
 public final class Translator {
 
     private final String fileName; // source file of SML code
-    private final OpcodeProviderInterface opcodeProvider;
+    private final IOpcodeProvider opcodeProvider;
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    public Translator(String fileName, OpcodeProviderInterface opcodeProvider ) {
+    public Translator(String fileName, IOpcodeProvider opcodeProvider ) {
         this.fileName = fileName;
         this.opcodeProvider = opcodeProvider;
     }

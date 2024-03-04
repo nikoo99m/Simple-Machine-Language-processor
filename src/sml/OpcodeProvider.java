@@ -5,7 +5,7 @@ import sml.instruction.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpcodeProvider implements OpcodeProviderInterface {
+public class OpcodeProvider implements IOpcodeProvider {
     private final Map<String, Class<? extends Instruction>> instructionMap = new HashMap<>();
 
     public OpcodeProvider() {

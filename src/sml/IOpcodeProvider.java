@@ -1,5 +1,5 @@
 package sml;
 
-public interface OpcodeProviderInterface {
+public interface IOpcodeProvider {
     Class<? extends Instruction> getInstructionClass(String opcode);
 }
