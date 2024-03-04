@@ -121,8 +121,9 @@ class JgeInstructionTest {
 
                 Arguments.of(new JgeInstruction("label1", "label2"),
                         new JgeInstruction("label1", "labelx"))
-              );
+        );
     }
+
     @ParameterizedTest
     @MethodSource("provideTestDataForNotEquals")
     public void testNotEquals(Instruction obj1, Instruction obj2) {
@@ -143,12 +144,22 @@ class JgeInstructionTest {
                         new JgeInstruction("label1", "label2"))
         );
     }
+
     @ParameterizedTest
     @MethodSource("provideTestDataForEquals")
     public void testEquals(Instruction obj1, Instruction obj2) {
 
         assertEquals(obj1, obj2);
         assertEquals(obj1.hashCode(), obj2.hashCode());
+    }
+
+    @Test
+    public void testToString() {
+
+        Instruction instruction = new JgeInstruction(null, "success");
+        String result = instruction.toString();
+
+        assertEquals("jge success", result);
     }
 
 }

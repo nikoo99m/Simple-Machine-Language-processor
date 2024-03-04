@@ -19,7 +19,7 @@ public abstract class JumpInstruction extends Instruction {
 
     @Override
     public String toString() {
-        return getOpcode() + " " + GOTOLABEL;
+        return getLabelString() + getOpcode() + " " + GOTOLABEL;
     }
 
     @Override

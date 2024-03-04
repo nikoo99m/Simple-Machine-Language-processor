@@ -117,5 +117,12 @@ class JneInstructionTest {
         assertEquals(obj1, obj2);
         assertEquals(obj1.hashCode(), obj2.hashCode());
     }
+    @Test
+    public void testToString() {
 
+        Instruction instruction = new JleInstruction("f3", "exit");
+        String result = instruction.toString();
+
+        assertEquals("f3: jle exit", result);
+    }
 }
