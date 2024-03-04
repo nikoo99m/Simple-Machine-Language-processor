@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -83,14 +82,15 @@ public final class Translator {
             try {
                 Constructor<? extends Instruction> constructor;
                 if (opcode.equals(JgeInstruction.OP_CODE) || opcode.equals(JneInstruction.OP_CODE) || opcode.equals(JleInstruction.OP_CODE)) {
-                    constructor = instructionClass.getDeclaredConstructor(String.class, String.class);
-                    return constructor.newInstance(label, scan(false));
+                    var operand = scan(false);
+                    return InstructionFactory.createJumpInstruction(operand, label, instructionClass);
                 } else if (opcode.equals(MulInstruction.OP_CODE) || opcode.equals(DivInstruction.OP_CODE)) {
-                    constructor = instructionClass.getDeclaredConstructor(String.class, InstructionDestination.class);
-                    return constructor.newInstance(label, getDestination(scan(false), machine));
+                    var operand = scan(false);
+                    return InstructionFactory.createSingleOperandInstruction(operand, label, machine, instructionClass);
                 } else {
-                    constructor = instructionClass.getDeclaredConstructor(String.class, InstructionDestination.class, InstructionSource.class);
-                    return constructor.newInstance(label, getDestination(scan(true), machine), getSource(scan(false), machine));
+                    var firstOperand = scan(true);
+                    var secondOperand = scan(false);
+                    return InstructionFactory.createDualOperandInstructions(firstOperand, secondOperand, label, machine, instructionClass);
                 }
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                      InvocationTargetException e) {
@@ -106,23 +106,6 @@ public final class Translator {
 
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs) // DONE
-    }
-
-    private InstructionSource getSource(String s, Machine machine) {
-        return Optional.<InstructionSource>empty()
-                .or(() -> OperandImmediate.parseOperandImmediate(s))
-                .or(() -> OperandMemory.parseOperandMemory(s, machine.getMemory()))
-                .or(() -> OperandMemoryWithBase.parseOperandMemoryWithBase(s, machine.getMemory(), machine.getRegisters()))
-                .or(() -> OperandRegister.parseOperandRegister(s, machine.getRegisters()))
-                .orElseThrow(() -> new IllegalArgumentException("invalid instruction source: " + s));
-    }
-
-    private InstructionDestination getDestination(String s, Machine machine) {
-        return Optional.<InstructionDestination>empty()
-                .or(() -> OperandMemory.parseOperandMemory(s, machine.getMemory()))
-                .or(() -> OperandMemoryWithBase.parseOperandMemoryWithBase(s, machine.getMemory(), machine.getRegisters()))
-                .or(() -> OperandRegister.parseOperandRegister(s, machine.getRegisters()))
-                .orElseThrow(() -> new IllegalArgumentException("invalid instruction destination: " + s));
     }
 
     private String getLabel() {
