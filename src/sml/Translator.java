@@ -81,18 +81,20 @@ public final class Translator {
         if (instructionClass != null) {
             try {
                 Constructor<? extends Instruction> constructor;
-                if (opcode.equals(JgeInstruction.OP_CODE) || opcode.equals(JneInstruction.OP_CODE) || opcode.equals(JleInstruction.OP_CODE)) {
+                if (JumpInstruction.class.isAssignableFrom(instructionClass)) {
                     var operand = scan(false);
                     return InstructionFactory.createJumpInstruction(operand, label, instructionClass);
-                } else if (opcode.equals(MulInstruction.OP_CODE) || opcode.equals(DivInstruction.OP_CODE)) {
+                } else if (SingleOperandInstruction.class.isAssignableFrom(instructionClass)) {
                     var operand = scan(false);
                     return InstructionFactory.createSingleOperandInstruction(operand, label, machine, instructionClass);
-                } else {
+                } else if(DualOperandInstruction.class.isAssignableFrom(instructionClass)){
                     var firstOperand = scan(true);
                     var secondOperand = scan(false);
                     return InstructionFactory.createDualOperandInstructions(firstOperand, secondOperand, label, machine, instructionClass);
                 }
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                else
+                    throw new IllegalArgumentException("Unknown instruction class: " + instructionClass.getName());
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException |
                      InvocationTargetException e) {
                 e.printStackTrace();
             }
