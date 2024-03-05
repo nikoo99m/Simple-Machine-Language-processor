@@ -132,4 +132,28 @@ class DivInstructionTest {
 
         assertEquals("div BX", result);
     }
+    @Test
+    public void testgetSize() {
+
+        Instruction instruction = new DivInstruction(null, new OperandRegister(BX, registers));
+        int result = instruction.getSize();
+
+        assertEquals(1, result);
+    }
+    @Test
+    public void testgetSizeTwo() {
+
+        Instruction instruction = new DivInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers));
+        int result = instruction.getSize();
+
+        assertEquals(2 , result);
+    }
+    @Test
+    public void testgetSizeThree() {
+
+        Instruction instruction = new DivInstruction(null, new OperandMemory(2, machine.getMemory()));
+        int result = instruction.getSize();
+
+        assertEquals(2 , result);
+    }
 }
