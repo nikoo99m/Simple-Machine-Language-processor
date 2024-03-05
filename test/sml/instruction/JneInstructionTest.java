@@ -125,4 +125,12 @@ class JneInstructionTest {
 
         assertEquals("f3: jle exit", result);
     }
+    @Test
+    public void testgetSize() {
+
+        Instruction instruction = new JneInstruction(null, "f2");
+        int result = instruction.getSize();
+
+        assertEquals(1, result);
+    }
 }

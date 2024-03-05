@@ -161,5 +161,14 @@ class JgeInstructionTest {
 
         assertEquals("jge success", result);
     }
+    @Test
+    public void testgetSize() {
+
+        Instruction instruction = new JgeInstruction(null, "f2");
+        int result = instruction.getSize();
+
+        assertEquals(1, result);
+    }
+
 
 }

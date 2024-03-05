@@ -154,5 +154,13 @@ class JleInstructionTest {
 
         assertEquals("f1: jle success", result);
     }
+    @Test
+    public void testgetSize() {
+
+        Instruction instruction = new JleInstruction(null, "f2");
+        int result = instruction.getSize();
+
+        assertEquals(1, result);
+    }
 
 }
