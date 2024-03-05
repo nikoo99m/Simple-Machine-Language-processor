@@ -40,7 +40,17 @@ class DivInstructionTest {
         instruction.execute(machine);
         Assertions.assertEquals(5, machine.getRegisters().get(AX));
     }
+    @Test
+    void divideWithOperandRegisterAndCheckWhenTheCombinationOfAxAndDxIsMoreThan32Bits() {
+        registers.set(AX, 1);
+        registers.set(DX, 1);
 
+        registers.set(BX, 10);
+        Instruction instruction = new DivInstruction(null, new OperandRegister(BX, registers));
+        instruction.execute(machine);
+        Assertions.assertEquals(429496729, machine.getRegisters().get(AX));
+        Assertions.assertEquals(7, machine.getRegisters().get(DX));
+    }
     @Test
     void divideWithOperandRegisterAndCheckRemainder() {
         registers.set(AX, 10);
@@ -159,4 +169,20 @@ class DivInstructionTest {
 
         assertEquals(2, result);
     }
+
+    @Test
+    public void testExecuteHandlesDivisionByZero() throws ArithmeticException {
+        registers.set(AX, 10);
+        registers.set(BX, 0);
+
+        Instruction instruction = new DivInstruction(null, new OperandRegister(Registers.RegisterNameImpl.BX, registers));
+        try {
+            instruction.execute(machine);
+            fail("expected AromaticException to be thrown");
+        } catch (ArithmeticException e) {
+            System.out.println("Division by zero error occurred.");
+        }
+    }
 }
+
+
