@@ -4,6 +4,7 @@ import sml.instruction.*;
 
 import java.util.HashMap;
 import java.util.Map;
+// Applying singleton to OpcodeProvider as there is no reason to have multiple OpcodeProvider instances in this program.
 
 public class OpcodeProvider implements IOpcodeProvider {
     private final Map<String, Class<? extends Instruction>> instructionMap = new HashMap<>();
