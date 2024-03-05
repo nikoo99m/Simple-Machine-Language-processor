@@ -141,6 +141,30 @@ class SubInstructionTest {
 
         assertEquals("sub [BX + 2], AX", result);
     }
+    @Test
+    public void testgetSize() {
+
+        Instruction instruction = new SubInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
+        int result = instruction.getSize();
+
+        assertEquals(2, result);
+    }
+    @Test
+    public void testgetSizetwo() {
+
+        Instruction instruction = new SubInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
+        int result = instruction.getSize();
+
+        assertEquals(1, result);
+    }
+    @Test
+    public void testgetSizethree() {
+
+        Instruction instruction = new SubInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers),new OperandImmediate(100));
+        int result = instruction.getSize();
+
+        assertEquals(3 , result);
+    }
 
 }
 
