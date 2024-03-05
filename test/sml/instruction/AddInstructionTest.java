@@ -34,7 +34,7 @@ class AddInstructionTest {
     }
 
     @Test
-    void executeValid() {
+    void executeTestToCheckTheSumOfReg1AndReg2AndStoreResultInTheFirstOne() {
         registers.set(AX, 5);
         registers.set(BX, 6);
         Instruction instruction = new AddInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
@@ -44,7 +44,7 @@ class AddInstructionTest {
     }
 
     @Test
-    void executeValidTwo() {
+    void executeTestToCheckTheSumOfOperandMemoryWithBaseAndRegAndStoreResultInTheFirstOne(){
         registers.set(AX, 5);
         registers.set(BX, 6);
         machine.getMemory().set(8, 10);
@@ -54,7 +54,7 @@ class AddInstructionTest {
     }
 
     @Test
-    void executeValidThree() {
+    void executeTestToCheckTheSumOfOperandRegisterAndOperandImmediateAndStoreResultInTheFirstOne() {
         registers.set(DX, 6);
         Instruction instruction = new AddInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
         instruction.execute(machine);
@@ -130,7 +130,7 @@ class AddInstructionTest {
     }
 
     @Test
-    public void testToStringtwo() {
+    public void testToStringTwo() {
 
         Instruction instruction = new AddInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         String result = instruction.toString();
@@ -138,7 +138,7 @@ class AddInstructionTest {
         assertEquals("add BX, AX", result);
     }
     @Test
-    public void testToStringthree() {
+    public void testToStringThree() {
 
         Instruction instruction = new AddInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
         String result = instruction.toString();
@@ -146,7 +146,7 @@ class AddInstructionTest {
         assertEquals("add [BX + 2], AX", result);
     }
     @Test
-    public void testgetSize() {
+    public void testGetSize() {
 
         Instruction instruction = new AddInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
         int result = instruction.getSize();
@@ -154,7 +154,7 @@ class AddInstructionTest {
         assertEquals(2, result);
     }
     @Test
-    public void testgetSizetwo() {
+    public void testGetSizeTwo() {
 
         Instruction instruction = new AddInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         int result = instruction.getSize();
@@ -162,7 +162,7 @@ class AddInstructionTest {
         assertEquals(1, result);
     }
     @Test
-    public void testgetSizethree() {
+    public void testGetSizeThree() {
 
         Instruction instruction = new AddInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
         int result = instruction.getSize();

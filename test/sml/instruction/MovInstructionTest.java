@@ -34,7 +34,7 @@ class MovInstructionTest {
     }
 
     @Test
-    void executeValid() {
+    void executeTestToCheckStoringTheValueOfReg2InReg1IsSuccessful() {
         registers.set(AX, 5);
         registers.set(BX, 6);
         Instruction instruction = new MovInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
@@ -43,7 +43,7 @@ class MovInstructionTest {
     }
 
     @Test
-    void executeValidTwo() {
+    void executeTestToCheckStoringTheValueOfOperandRegisterInOperandMemoryWithBaseIsSuccessful() {
         registers.set(AX, 5);
         registers.set(BX, 6);
         Instruction instruction = new MovInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
@@ -52,7 +52,7 @@ class MovInstructionTest {
     }
 
     @Test
-    void executeValidThree() {
+    void executeTestToCheckStoringTheValueOfOperandImmediateInOperandRegisterIsSuccessful() {
         registers.set(DX, 6);
         Instruction instruction = new MovInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
         instruction.execute(machine);
@@ -127,7 +127,7 @@ class MovInstructionTest {
     }
 
     @Test
-    public void testToStringtwo() {
+    public void testToStringTwo() {
 
         Instruction instruction = new MovInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         String result = instruction.toString();
@@ -135,7 +135,7 @@ class MovInstructionTest {
         assertEquals("mov BX, AX", result);
     }
     @Test
-    public void testToStringthree() {
+    public void testToStringThree() {
 
         Instruction instruction = new MovInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
         String result = instruction.toString();
@@ -143,7 +143,7 @@ class MovInstructionTest {
         assertEquals("mov [BX + 2], AX", result);
     }
     @Test
-    public void testgetSize() {
+    public void testGetSize() {
 
         Instruction instruction = new MovInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
         int result = instruction.getSize();
@@ -151,7 +151,7 @@ class MovInstructionTest {
         assertEquals(2, result);
     }
     @Test
-    public void testgetSizetwo() {
+    public void testGetSizeTwo() {
 
         Instruction instruction = new MovInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         int result = instruction.getSize();
@@ -159,7 +159,7 @@ class MovInstructionTest {
         assertEquals(1, result);
     }
     @Test
-    public void testgetSizethree() {
+    public void testGetSizeThree() {
 
         Instruction instruction = new MovInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers),new OperandImmediate(100));
         int result = instruction.getSize();

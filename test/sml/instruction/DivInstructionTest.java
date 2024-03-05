@@ -11,8 +11,7 @@ import sml.*;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static sml.Registers.RegisterNameImpl.*;
 
 class DivInstructionTest {
@@ -41,8 +40,9 @@ class DivInstructionTest {
         instruction.execute(machine);
         Assertions.assertEquals(5, machine.getRegisters().get(AX));
     }
+
     @Test
-    void divideWithOperandRegisterAndCheckRemainder(){
+    void divideWithOperandRegisterAndCheckRemainder() {
         registers.set(AX, 10);
         registers.set(BX, 3);
         Instruction instruction = new DivInstruction(null, new OperandRegister(BX, registers));
@@ -78,7 +78,7 @@ class DivInstructionTest {
                 Arguments.of((new DivInstruction("div1", new OperandRegister(AX, registers))),
                         new DivInstruction("div1", new OperandRegister(BX, registers))),
 
-                Arguments.of((new DivInstruction("div1", new OperandMemory(0 ,machine.getMemory()))),
+                Arguments.of((new DivInstruction("div1", new OperandMemory(0, machine.getMemory()))),
                         new DivInstruction("div1", new OperandMemory(3, machine.getMemory()))));
 
 
@@ -103,7 +103,7 @@ class DivInstructionTest {
                 Arguments.of(new DivInstruction("div1", new OperandRegister(AX, registers)),
                         new DivInstruction("div1", new OperandRegister(AX, registers))),
 
-                Arguments.of((new DivInstruction("div1", new OperandMemory(0 ,machine.getMemory()))),
+                Arguments.of((new DivInstruction("div1", new OperandMemory(0, machine.getMemory()))),
                         new DivInstruction("div1", new OperandMemory(0, machine.getMemory()))));
     }
 
@@ -125,35 +125,38 @@ class DivInstructionTest {
     }
 
     @Test
-    public void testToStringtwo() {
+    public void testToStringTwo() {
 
         Instruction instruction = new DivInstruction(null, new OperandRegister(BX, registers));
         String result = instruction.toString();
 
         assertEquals("div BX", result);
     }
+
     @Test
-    public void testgetSize() {
+    public void testGetSize() {
 
         Instruction instruction = new DivInstruction(null, new OperandRegister(BX, registers));
         int result = instruction.getSize();
 
         assertEquals(1, result);
     }
+
     @Test
-    public void testgetSizeTwo() {
+    public void testGetSizeTwo() {
 
         Instruction instruction = new DivInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers));
         int result = instruction.getSize();
 
-        assertEquals(2 , result);
+        assertEquals(2, result);
     }
+
     @Test
-    public void testgetSizeThree() {
+    public void testGetSizeThree() {
 
         Instruction instruction = new DivInstruction(null, new OperandMemory(2, machine.getMemory()));
         int result = instruction.getSize();
 
-        assertEquals(2 , result);
+        assertEquals(2, result);
     }
 }

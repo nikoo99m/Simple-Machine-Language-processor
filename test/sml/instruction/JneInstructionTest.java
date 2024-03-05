@@ -120,13 +120,13 @@ class JneInstructionTest {
     @Test
     public void testToString() {
 
-        Instruction instruction = new JleInstruction("f3", "exit");
+        Instruction instruction = new JneInstruction("f3", "exit");
         String result = instruction.toString();
 
-        assertEquals("f3: jle exit", result);
+        assertEquals("f3: jne exit", result);
     }
     @Test
-    public void testgetSize() {
+    public void testGetSize() {
 
         Instruction instruction = new JneInstruction(null, "f2");
         int result = instruction.getSize();

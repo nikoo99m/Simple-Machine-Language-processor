@@ -241,7 +241,7 @@ class CmpInstructionTest {
     }
 
     @Test
-    public void testToStringtwo() {
+    public void testToStringTwo() {
 
         Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         String result = instruction.toString();
@@ -249,7 +249,7 @@ class CmpInstructionTest {
         assertEquals("cmp BX, AX", result);
     }
     @Test
-    public void testToStringthree() {
+    public void testToStringThree() {
 
         Instruction instruction = new CmpInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
         String result = instruction.toString();
@@ -257,7 +257,7 @@ class CmpInstructionTest {
         assertEquals("cmp [BX + 2], AX", result);
     }
     @Test
-    public void testgetSize() {
+    public void testGetSize() {
 
         Instruction instruction = new CmpInstruction(null, new OperandRegister(DX, registers), new OperandImmediate(100));
         int result = instruction.getSize();
@@ -265,7 +265,7 @@ class CmpInstructionTest {
         assertEquals(2, result);
     }
     @Test
-    public void testgetSizetwo() {
+    public void testGetSizeTwo() {
 
         Instruction instruction = new CmpInstruction(null, new OperandRegister(BX, registers), new OperandRegister(AX, registers));
         int result = instruction.getSize();
@@ -273,7 +273,7 @@ class CmpInstructionTest {
         assertEquals(1, result);
     }
     @Test
-    public void testgetSizethree() {
+    public void testGetSizeThree() {
 
         Instruction instruction = new CmpInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers), new OperandRegister(AX, registers));
         int result = instruction.getSize();

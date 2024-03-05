@@ -118,7 +118,7 @@ class MulInstructionTest {
     }
 
     @Test
-    public void testToStringtwo() {
+    public void testToStringTwo() {
 
         Instruction instruction = new MulInstruction("f2", new OperandRegister(BX, registers));
         String result = instruction.toString();
@@ -126,7 +126,7 @@ class MulInstructionTest {
         assertEquals("f2: mul BX", result);
     }
     @Test
-    public void testgetSize() {
+    public void testGetSize() {
 
         Instruction instruction = new MulInstruction(null, new OperandRegister(BX, registers));
         int result = instruction.getSize();
@@ -134,7 +134,7 @@ class MulInstructionTest {
         assertEquals(1, result);
     }
     @Test
-    public void testgetSizeTwo() {
+    public void testGetSizeTwo() {
 
         Instruction instruction = new MulInstruction(null, new OperandMemoryWithBase(2, machine.getMemory(), BX, registers));
         int result = instruction.getSize();
@@ -142,7 +142,7 @@ class MulInstructionTest {
         assertEquals(2 , result);
     }
     @Test
-    public void testgetSizeThree() {
+    public void testGetSizeThree() {
 
         Instruction instruction = new MulInstruction(null, new OperandMemory(2, machine.getMemory()));
         int result = instruction.getSize();

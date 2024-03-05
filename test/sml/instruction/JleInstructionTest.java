@@ -157,6 +157,7 @@ class JleInstructionTest {
     @Test
     public void testgetSize() {
 
+
         Instruction instruction = new JleInstruction(null, "f2");
         int result = instruction.getSize();
 
