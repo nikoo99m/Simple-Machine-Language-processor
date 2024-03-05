@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
@@ -22,13 +23,15 @@ public final class Translator {
 
     private final String fileName; // source file of SML code
     private final IOpcodeProvider opcodeProvider;
+    private final IInstructionFactory instructionFactory;
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    public Translator(String fileName, IOpcodeProvider opcodeProvider ) {
+    public Translator(String fileName, IOpcodeProvider opcodeProvider, IInstructionFactory instructionFactory) {
         this.fileName = fileName;
         this.opcodeProvider = opcodeProvider;
+        this.instructionFactory = instructionFactory;
     }
 
     public void readAndTranslate(Machine machine) throws IOException {
@@ -61,7 +64,6 @@ public final class Translator {
     }
 
 
-
     /**
      * Translates the current line into an instruction with the given label
      *
@@ -76,73 +78,29 @@ public final class Translator {
         if (line.isEmpty())
             return null;
 
-        String opcode = scan(false);
+        var splits = scan();
+        String opcode = splits[0];
         Class<? extends Instruction> instructionClass = opcodeProvider.getInstructionClass(opcode);
-        if (instructionClass != null) {
-            try {
-                Constructor<? extends Instruction> constructor;
-                if (JumpInstruction.class.isAssignableFrom(instructionClass)) {
-                    var operand = scan(false);
-                    return InstructionFactory.createJumpInstruction(operand, label, instructionClass);
-                } else if (SingleOperandInstruction.class.isAssignableFrom(instructionClass)) {
-                    var operand = scan(false);
-                    return InstructionFactory.createSingleOperandInstruction(operand, label, machine, instructionClass);
-                } else if(DualOperandInstruction.class.isAssignableFrom(instructionClass)){
-                    var firstOperand = scan(true);
-                    var secondOperand = scan(false);
-                    return InstructionFactory.createDualOperandInstructions(firstOperand, secondOperand, label, machine, instructionClass);
-                }
-                else
-                    throw new IllegalArgumentException("Unknown instruction class: " + instructionClass.getName());
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException |
-                     InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Unknown instruction: " + opcode);
-        }
-        return null;
-            // TODO: add code for all other types of instructions // DONE
+        return instructionFactory.getInstruction(label, machine, instructionClass, splits, opcode);
+        // TODO: add code for all other types of instructions // DONE
+        // TODO: Then, replace the switch by using the Reflection API // DONE
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs) // DONE
+    }
 
-            // TODO: Then, replace the switch by using the Reflection API // DONE
-
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs) // DONE
+    private String[] scan() {
+        return Arrays.stream(line.trim().split(" "))
+                .map(x -> x.replace(",", "").trim())
+                .toArray(String[]::new);
     }
 
     private String getLabel() {
-        String word = scan(false);
-        if (word.endsWith(":"))
-            return word.substring(0, word.length() - 1);
-
-        // undo scanning the word
-        line = word + " " + line;
-        return null;
-    }
-
-    /**
-     * Return the first word of line and remove it from line.
-     * If there is no word, return "".
-     *
-     * @param comma remove the trailing comma if set to true
-     */
-    private String scan(boolean comma) {
-        line = line.trim();
-
-        int whiteSpacePosition = 0;
-        while (whiteSpacePosition < line.length()) {
-            if (Character.isWhitespace(line.charAt(whiteSpacePosition)))
-                break;
-            whiteSpacePosition++;
+        if (line.contains(":")) {
+            var label = line.split(":")[0];
+            line = line.substring(line.indexOf(":") + 1).trim();
+            return label;
+        } else {
+            return null;
         }
-
-        String word = line.substring(0, whiteSpacePosition);
-        line = line.substring(whiteSpacePosition);
-        if (comma) {
-            if (word.endsWith(","))
-                return word.substring(0, word.length() - 1);
-            throw new IllegalArgumentException("Expected a comma after " + word);
-        }
-        return word;
     }
 }

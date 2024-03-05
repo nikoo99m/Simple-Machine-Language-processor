@@ -7,9 +7,16 @@ import java.util.Map;
 
 public class OpcodeProvider implements IOpcodeProvider {
     private final Map<String, Class<? extends Instruction>> instructionMap = new HashMap<>();
-
-    public OpcodeProvider() {
+    private static OpcodeProvider opcodeProvider;
+    private OpcodeProvider() {
         setInstructionMap();
+    }
+    public static OpcodeProvider getInstance()
+    {
+        if(opcodeProvider == null)
+            opcodeProvider = new OpcodeProvider();
+
+        return  opcodeProvider;
     }
 
     public void setInstructionMap() {

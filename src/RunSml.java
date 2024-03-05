@@ -1,3 +1,4 @@
+import sml.InstructionFactory;
 import sml.Machine;
 import sml.OpcodeProvider;
 import sml.Translator;
@@ -18,7 +19,7 @@ public class RunSml {
 
         try {
 
-            Translator t = new Translator(args[0], new OpcodeProvider());
+            Translator t = new Translator(args[0], OpcodeProvider.getInstance(), InstructionFactory.getInstance());
             Machine m = new Machine(0x40_000);
             t.readAndTranslate(m);
 
