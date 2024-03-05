@@ -5,8 +5,19 @@ import sml.instruction.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
+/**
+ * Represents factory class capable of creating various instruction types, including
+ * those that extend jump, single operand, and dual operand instructions
+ * Additionally, the factory class contains multiple factory methods, each responsible for creating a specific type of instruction.
+ * <p>
+ * Applying singleton to the InstructionFactory to ensure that only one instance of
+ * the factory exists throughout running one or multiple machines. This is because having multiple instances of
+ * InstructionFactory does not offer any additional benefit and might lead to unnecessary resource
+ * consumption. By making the constructor private and providing a static method to access the
+ * single instance of InstructionFactory, all parts of the program work with the
+ * same instance, promoting consistency and efficiency.
+**/
 
-// explain this is a factory class which is able to create any instruction which extends jump, single and dual operand instructions. Additionally explain that this factory class consists of multiple factory methods as well.
 public class InstructionFactory implements IInstructionFactory {
     private static Instruction createDualOperandInstructions(String firstOperand, String secondOperand, String label, Machine machine, Class<? extends Instruction> instructionClass) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Constructor<? extends Instruction> constructor;
