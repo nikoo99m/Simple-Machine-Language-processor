@@ -1,7 +1,5 @@
 package sml;
 
-// TODO: write a JavaDoc for the class and methods // DONE
-
 import sml.instruction.JleInstruction;
 
 import java.util.Objects;
@@ -53,7 +51,7 @@ public class Flags implements IFlags {
         this.sign = sign;
     }
 
-    //TODO: implement methods .toString, .equals and .hashCode // DONE
+
 
     /**
      * Checks whether this object is equal to another object.

@@ -35,7 +35,6 @@ public class OperandImmediate implements InstructionSource {
         return String.valueOf(value);
     }
 
-    //TODO: implement methods .equals and .hashCode // DONE
     @Override
     public boolean equals(Object o) {
         if (this == o) {

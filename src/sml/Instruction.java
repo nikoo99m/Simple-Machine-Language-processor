@@ -1,6 +1,5 @@
 package sml;
 
-// TODO: write a JavaDoc for the class // DONE
 
 import java.util.Objects;
 
@@ -66,9 +65,7 @@ public abstract class Instruction {
         return (getLabel() == null) ? "" : getLabel() + ": ";
     }
 
-    // TODO: What exactly is the meaning of abstract in the declaration below?
-    //       Note that the method is declared in the superclass.
-    //       (Write a short explanation.) // DONE
+
     // answer : these abstract methods do not have implementation which means
     // subclasses are responsible for providing their own implementations for the required
     // methods based on their attributes and behaviour.
@@ -76,7 +73,7 @@ public abstract class Instruction {
     @Override
     public abstract String toString();
 
-    // TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine). // DONE
+
 
     /**
      * Checks if this instruction is equal to another object.

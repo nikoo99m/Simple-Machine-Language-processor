@@ -82,10 +82,7 @@ public final class Translator {
         String opcode = splits[0];
         Class<? extends Instruction> instructionClass = opcodeProvider.getInstructionClass(opcode);
         return instructionFactory.getInstruction(label, machine, instructionClass, splits, opcode);
-        // TODO: add code for all other types of instructions // DONE
-        // TODO: Then, replace the switch by using the Reflection API // DONE
-        // TODO: Next, use dependency injection to allow this machine class
-        //       to work with different sets of opcodes (different CPUs) // DONE
+
     }
 
     private String[] scan() {

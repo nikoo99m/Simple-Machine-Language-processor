@@ -89,11 +89,10 @@ public final class Machine implements IMachine {
                 .collect(Collectors.joining("\n"));
     }
 
-    // TODO: use pattern matching for instanceof // DONE
-    // https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
+
     @Override
     public boolean equals(Object o) {
-        // TODO: add missing fields // DONE
+
         if (this == o) return true;
         if (o instanceof Machine other) {
             return Objects.equals(this.labels, other.labels)

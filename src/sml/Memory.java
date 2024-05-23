@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// TODO: write a JavaDoc for the class // DONE
 
 /**
  * Represents the memory of machine.
@@ -62,7 +61,7 @@ public class Memory {
                 .collect(Collectors.joining("\n"));
     }
 
-    //TODO: implement methods .equals and .hashCode // DONE
+
     /**
      * Checks whether two objects of memory are equal or not.
      * by checking the equality of memory values and addresses.

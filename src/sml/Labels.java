@@ -37,17 +37,14 @@ public final class Labels {
      * @return the address the label refers to
      */
     public Integer getAddress(String label) {
-        // TODO: A NullPointerException can be thrown in the code line below
-        //       even when the label is not null. Why can it happen?
-        //       (Write an explanation.)
+        //
         // answer: If the `get()` method of a `HashMap<X, Integer>` returns `null` because
         //         no value exists for the given key, casting this `null` to `Integer`
         //         is still valid however, if any operations are then applied to the null value this
         //         can result in a `NullPointerException`. For example the caller of Labels.getAddress() i.e.,
         //         Machine.getOffset() attempts a subtraction which can cause the aforementioned exception:
         //         return labels.getAddress(label) - programCounter.
-        // TODO: What is the best way of dealing with non-existing labels?
-        //       Add code to deal with them.
+        //
         // answer: Using the containsKey check, the existence of the key can be verified prior to accessing it.
         //
 
@@ -68,14 +65,14 @@ public final class Labels {
      */
     @Override
     public String toString() {
-        // TODO: Implement the method using the Stream API (see also class Registers). // DONE
+
         return labels.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map(e -> e.getKey() + " = " + e.getValue())
                 .collect(Collectors.joining(", ", "[", "]")) ;
     }
 
-    // TODO: Implement methods .equals and .hashCode (needed in class Machine). // DONE
+
 
     /**
      * Indicates whether some other object is "equal to" this one.
