@@ -3,7 +3,6 @@ package sml;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// TODO: write a JavaDoc for the class // DONE
 
 /**
  * Represents a map of labels and their associated addresses.
@@ -21,8 +20,7 @@ public final class Labels {
      */
     public void addLabel(String label, int address) {
         Objects.requireNonNull(label);
-        // TODO: Add a check that ensures that label duplicates are not simply ignored.
-        //       What is the best way of handling duplicate labels? // DONE
+
         // answer: The best way to handle duplicate attempts its to raise an appropriate exception such that the user is informed of the improper operation.
         if (labels.containsKey(label)) {
             throw new IllegalStateException("Attempt to add a duplicate label in labels: " + label);
